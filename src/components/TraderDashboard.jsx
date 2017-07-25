@@ -30,6 +30,7 @@ class TraderDashboard extends React.Component {
   }
   
   componentDidMount() {
+      console.log(this.props);
      // var testLogged = apiSvc.isAlreadyLogged(); 
      // this.setState( { isLoggedIn: testLogged} );
   }
