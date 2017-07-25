@@ -40310,7 +40310,7 @@
 	var localServiceUrl = 'http://localhost:8080/graphqlserver/rest/graphql/root';
 	var remoteServiceUrl = config.serverUrl + 'graphqlserver/rest/graphql/root';
 	var serviceUrl = void 0;
-	if (process.env.NODE_ENV === 'testing' || process.env.NODE_ENV === 'minimize') {
+	if (process.env.NODE_ENV === 'localhost') {
 	  serviceUrl = remoteServiceUrl;
 	} else {
 	  serviceUrl = localServiceUrl;
