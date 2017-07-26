@@ -7,13 +7,14 @@
     "build": "webpack",
     "build min": "cross-env NODE_ENV=minimize webpack",
     "build:w": "webpack --watch",
-    "build rmt -> testing": "cross-env NODE_ENV=testing webpack",
+    "build in Deploy": "cross-env NODE_ENV=testing webpack",
     "build rmt & min": "cross-env NODE_ENV=testingmin webpack",
     "build localhost": "cross-env NODE_ENV=localhost webpack",    
     "start": "httpster -p $PORT",
     "install ": "install --save",
     "install-dev": "install --save-dev",
-    "test": "mocha tests/ApiTests.js"
+    "test": "mocha tests/ApiTests.js",
+    "test graphql": "mocha tests/graphqlTests.js"        
   },
   "author": "",
   "license": "ISC",

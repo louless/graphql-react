@@ -28,7 +28,7 @@ if ((process.env.NODE_ENV === 'testing') || (process.env.NODE_ENV === 'testingmi
         from: fromPath,
         before: 'mkdir /opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war /opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war/assets',
         after: 'chmod 775 -R /opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war',
-//        cover: false, //important: If the 'cover' of value is false,All files in this folder will be cleared before starting deployment.
+        cover: false, //important: If the 'cover' of value is false,All files in this folder will be cleared before starting deployment.
         to: testingRemotePath  
     });
     pluginArr.push(testingDeploy);
@@ -75,7 +75,7 @@ module.exports = {
     loaders: [
     {
         test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules|bower_components|docs)/,
         loader: 'babel',
         query: {
             presets: ['react', 'es2015', 'stage-0']

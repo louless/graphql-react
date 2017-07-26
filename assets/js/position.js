@@ -1,6 +1,6 @@
 
-var ordersCore = require('./marx.orders.core.js');
-var constr = require('./constructor.js');
+const ordersCore = require('./marx.orders.core.js');
+const constr = require('./constructor.js');
 
 // default settings
 var options = {

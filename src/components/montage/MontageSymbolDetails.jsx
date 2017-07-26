@@ -2,6 +2,7 @@ import React from 'react';
 
 import Select from '../Select.jsx';
 import DivOrderType from './DivOrderType.jsx';
+const ordersCore = require('../../../assets/js/marx.orders.core.js');
 
 //  DISABLED SYNTAX ERROR CHECKING
 
@@ -20,7 +21,7 @@ class MontageSymbolDetails extends React.Component {
         var tl = [];
         const types = this.orderTypes;
         for(var i = 0; i < types.length; i++){
-            tl.push(ordTypes[i]); // from marx.orders.core.js
+            tl.push(ordersCore.ordTypes[i]); // from marx.orders.core.js
         }    
         return tl;
     };

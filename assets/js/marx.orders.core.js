@@ -409,11 +409,6 @@ function sumPositions(p1,p2) {
     return summary;
 };
 
-//module.exports = {
-//    ordTypes: ordTypes,
-//    summarizePositions: summarizePositions,
-//    sumPositions: sumPositions
-//};
 
 //
 //function placeOrder(side) {
@@ -671,3 +666,8 @@ function sumPositions(p1,p2) {
 //    }
 //};
 
+module.exports = {
+    ordTypes: ordTypes,
+    summarizePositions: summarizePositions,
+    sumPositions: sumPositions
+};
