@@ -8,28 +8,31 @@ class Header extends React.Component {
     constructor(props){
         super(props);
         this.handleSignAct= this.handleSignAct.bind(this);
-        this.doRemoteLogin = this.doRemoteLogin.bind(this);
+//        this.doRemoteLogin = this.doRemoteLogin.bind(this);
         this.state={
-            loginHTML: null
+            
         };
     };
 
-    doRemoteLogin(){
-        ApiSvc.login('test', 'test')
-                .then( ( res ) => {
-                    if ((res.ok) && (res !== null)){
-                    }            
-                });
-    }   
+//    doRemoteLogin(){
+//        ApiSvc.login('test', 'test')
+//                .then( ( res ) => {
+//                    if ((res.ok) && (res !== null)){
+//                    }            
+//                });
+//    }   
 
     handleSignAct(e){
         if (this.props.isLogged){
-            ApiSvc.logout();
-        }else{
-            var htmlLogin = this.doRemoteLogin(); 
-            if (htmlLogin !== null) 
-                this.props.onSignAct(htmlLogin); // move level up
-        }
+           this.props.onSignAct(e.target.value);  
+       } 
+            
+//            ApiSvc.logout();
+//        }else{
+//            var htmlLogin = this.doRemoteLogin(); 
+//            if (htmlLogin !== null) 
+//                this.props.onSignAct(htmlLogin); // move level up
+//        }
     }   
 
     render(){  

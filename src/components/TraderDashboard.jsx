@@ -20,7 +20,7 @@ class TraderDashboard extends React.Component {
     this.state = {
       watchlists: [],
       currentWatchListID: 0,
-      isLoggedIn: false,
+      isLogged: props.location.state.isAuth,
       htmlLogin: null
     };
   }
@@ -30,7 +30,7 @@ class TraderDashboard extends React.Component {
   }
   
   componentDidMount() {
-      console.log(this.props);
+      //console.log(this.props);
      // var testLogged = apiSvc.isAlreadyLogged(); 
      // this.setState( { isLoggedIn: testLogged} );
   }
@@ -51,7 +51,9 @@ class TraderDashboard extends React.Component {
   }  
 
   onSignAction(newState){
-        window.console.log("need implement this call...");
+        this.setState({isLogged: newState});
+        const {location} = this.props;
+        location.state = {isAuth: newState};        
   }
   
   onGetData(data){
@@ -65,7 +67,7 @@ class TraderDashboard extends React.Component {
   render() {    
         return (
           <div className="container-fluid">
-            <Header onSignAct={this.onSignAction} isLogged={this.state.isLoggedIn}/>
+            <Header onSignAct={this.onSignAction} isLogged={this.state.isLogged}/>
             <div className="well">
               <strong>MARX TRADING SYSTEM CLIENT</strong>
             </div>
@@ -82,7 +84,7 @@ class TraderDashboard extends React.Component {
                 </div>
                 <div className="row">
                   <div className="col-md-7">
-                    <CurrentPositions isLogged={this.state.isLoggedIn}/>
+                    <CurrentPositions isLogged={this.state.isLogged}/>
                   </div>
                   <div className="col-md-5">
                     <TimeAndSales />
