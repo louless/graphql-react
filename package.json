@@ -9,6 +9,7 @@
     "build:w": "webpack --watch",
     "build in Deploy": "cross-env NODE_ENV=testing webpack",
     "build in Deploy|ugly": "cross-env NODE_ENV=testingmin webpack",
+    "build in Stagging": "cross-env NODE_ENV=stagging webpack",    
     "build localhost": "cross-env NODE_ENV=localhost webpack",    
     "start": "httpster -p $PORT",
     "install ": "install --save",

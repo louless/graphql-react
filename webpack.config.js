@@ -6,35 +6,54 @@ var SshWebpackPlugin = require('ssh-webpack-plugin');
 const buildDir = './assets/build/';
 const entryDir = './src/main.jsx';
 
+const node_env = process.env.NODE_ENV;
 var pluginArr = [];
-if ((process.env.NODE_ENV === 'testing') || (process.env.NODE_ENV === 'testingmin')) {
+if ((node_env === 'testing') || 
+    (node_env === 'testingmin') ||
+    (node_env === 'stagging')) {
     // for deploy require remote folder structure:
-    //  -project_name.war 
+    //  --project_name.war 
     //    |
-    //    - assets/
-    //    - index.html - for this index page
-    const fromPath = './assets';
-    const testingHost = 'deploy.marx.tech';
-    const testingPort = '22';
-    const testingUser = 'ec2-user';
-    const testingKeyDir = require('fs').readFileSync('../singapore-development.pem');
-    const testingRemotePath = '/opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war/assets';    
+    //    |- assets/
+    //    |- index.html - for this index page
     
+    let fromPath,
+        remoteHost,
+        remotePort,
+        remoteUser,
+        KeyDir,
+        remotePath;
+    if (node_env === 'stagging'){
+        fromPath = './assets';
+        remoteHost = 'stagging.marx.tech';
+        remotePort = '22';
+        remoteUser = 'ec2-user';
+        KeyDir = require('fs').readFileSync('../TradingServer.pem');
+        remotePath = '/opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war/assets';
+    }else{
+        fromPath = './assets';
+        remoteHost = 'deploy.marx.tech';
+        remotePort = '22';
+        remoteUser = 'ec2-user';
+        KeyDir = require('fs').readFileSync('../singapore-development.pem');
+        remotePath = '/opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war/assets';
+    }
+
     testingDeploy = new SshWebpackPlugin({
-        host: testingHost,
-        port: testingPort,
-        username: testingUser,
-        privateKey: testingKeyDir,
+        host: remoteHost,
+        port: remotePort,
+        username: remoteUser,
+        privateKey: KeyDir,
         from: fromPath,
         before: 'mkdir /opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war /opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war/assets',
         after: 'chmod 775 -R /opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war',
         cover: false, //important: If the 'cover' of value is false,All files in this folder will be cleared before starting deployment.
-        to: testingRemotePath  
+        to: remotePath  
     });
     pluginArr.push(testingDeploy);
 }
 
-if ((process.env.NODE_ENV === 'testingmin') || (process.env.NODE_ENV === 'minimize')){
+if ((node_env === 'testingmin') || (node_env === 'minimize')){
     // for production minimize code
     env = new webpack.DefinePlugin({
         'process.env': {
