@@ -28,7 +28,7 @@ const loginPath = config.loginPath;
 const dashboardPath = config.dashboardPath;
 
 const Entry= ({...props}) => {
-      return ( <ApolloProvider client={client}>
+      return ( <ApolloProvider client={client} >
                     <TraderDashboard {...props}/>
                 </ApolloProvider> );
     };
@@ -46,14 +46,6 @@ const fakeAuth = {
     setTimeout(history1.push(loginPath), 100);
   }
 };    
-
-//const AuthButton = withRouter(({ history }) => (
-//        fakeAuth.isAuthenticated ? (
-//                <p>  <button onClick={() => fakeAuth.signOut(history)} >Sign out</button> </p>
-//              ) : (
-//                <p>  <button onClick={ () => fakeAuth.signIn(history)} >Sign in</button> </p>
-//              )
-//));
 
 const PrivateRoute = ({component:Component, ...rest}) => {
     const route = ( props ) => {
@@ -73,16 +65,17 @@ const PrivateRoute = ({component:Component, ...rest}) => {
                       } } />
                     ));
         };
-    
     return ( <Route {...rest} render={ (props) => route(props) } /> );
 };
-
-//const PrivateComponentTest = () => {
-//    return ( <p> here security text! </p>);
-//};
-
-//const onSignAction = (newState) => {
-//      fakeAuth.isAuthenticated = newState;
+//
+//const onSignAction = (newState)  => {
+//    
+//    withRouter( ({history}) => {
+//        if (newState === 'false'){
+//            signout( history );
+//        }  
+//    });
+//      
 //};    
 
 ReactDom.render( (
@@ -94,9 +87,6 @@ ReactDom.render( (
         </Router>
         ), document.getElementById('app')
  );
-
-
- // <PrivateRoute path={dashboardPath} component={Entry} />
 
 // 
 //       <!--<AuthButton />-->

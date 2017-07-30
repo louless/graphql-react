@@ -10,6 +10,8 @@ import TimeAndSales from './TimeAndSales.jsx';
 import Signin from './Signin.jsx';
 import apiSvc from '../../assets/js/services/tradingServer/apiSvc';
 import { gql, graphql } from 'react-apollo';
+import { Redirect} from 'react-router-dom';
+const config = require('../../assets/js/services/tradingServer/config.js');
 
 class TraderDashboard extends React.Component {
   constructor(props) {
@@ -45,6 +47,9 @@ class TraderDashboard extends React.Component {
             });
       }
   }
+  componentDidUpdate(){
+     
+  }
 
   onChangeCurWatchList (id) {
     this.setState({ currentWatchListID: id });
@@ -53,7 +58,7 @@ class TraderDashboard extends React.Component {
   onSignAction(newState){
         this.setState({isLogged: newState});
         const {location} = this.props;
-        location.state = {isAuth: newState};        
+        location.state = {isAuth: newState};  
   }
   
   onGetData(data){
@@ -65,7 +70,13 @@ class TraderDashboard extends React.Component {
   }
 
   render() {    
-        return (
+        if ( this.state.isLogged === 'false'){
+            return ( <Redirect to={ {
+                            pathname: config.loginPath,
+                            state: { }
+                      } } />);
+        }else
+            return (
           <div className="container-fluid">
             <Header onSignAct={this.onSignAction} isLogged={this.state.isLogged}/>
             <div className="well">

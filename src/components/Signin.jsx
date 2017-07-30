@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 const ApiSvc = require('../../assets/js/services/tradingServer/apiSvc.js');
+const config = require('../../assets/js/services/tradingServer/config.js');
 
 class Signin extends React.Component{
     constructor(props){
@@ -19,7 +20,6 @@ class Signin extends React.Component{
         if ((this.state.username === '' ) || (this.state.password === ''))
             succ = false;
         else{
-            succ = false;
             succ = true;
 //            if ( !ApiSvc.isAlreadyLogged() ){
 //                succ = ApiSvc.login(this.state.username, this.state.password);
@@ -48,7 +48,7 @@ class Signin extends React.Component{
     }
     
     render(){
-        const {from} = this.props.location.state || {from: {pathname: '/reactfront'}};
+        const { from } = this.props.location.state ||  {from: {pathname: config.dashboardPath}};
         
         if (this.state.redirectToReferrer) {
             from.state = {isAuth: true};

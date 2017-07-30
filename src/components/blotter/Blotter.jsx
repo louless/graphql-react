@@ -14,7 +14,7 @@ const Blotter = () => {
     
     function testClick (){
         var isLogged = ApiSvc.isAlreadyLogged();
-        showMessage(isLogged);
+      //  showMessage(isLogged);
 //            ApiSvc.getAccountPositions(3).then( res => {
 //                positionList = res.body;
 //                console.log('position list');
@@ -44,7 +44,7 @@ const Blotter = () => {
       <div className="panel-heading">BLOTTER</div>
       <div className="panel-body">
         Panel content
-        <button className="btn" onClick={testClick}>test log state</button>
+        <button className="btn" onClick={testClick}>test CORS marx app</button>
         <button className="btn" onClick={loginClick}>do log in as test</button>  
         <button className="btn" onClick={testCorsGraphqlServerClick}>test CORS graphqlserver app</button>
       </div>

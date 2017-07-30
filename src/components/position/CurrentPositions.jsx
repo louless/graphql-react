@@ -27,7 +27,7 @@ class CurrentPositions extends React.Component {
     
     componentDidUpdate(){ 
 //        if (this.state.isLogged){
-            ApiSvc.getAccountPositions(this.state.account).then( res => {
+      /*      ApiSvc.getAccountPositions(this.state.account).then( res => {
                 var positList = res;
                 if (positList === null) 
                     return;
@@ -37,7 +37,7 @@ class CurrentPositions extends React.Component {
                 }
                 positList = Position.updatePositionList(positList);
                 this.setState( {positionList: positList} );
-            });
+            });*/
 //        }    
     }
 

@@ -10,19 +10,21 @@ const orderMgmtRestUrl = serverUrl + 'omsrestservices/rest/';
 var loginPath;
 var dashboardPath;
 var privatePath;
-if (process.env.NODE_ENV === 'localhost') {
-    loginPath = '/react-graphql/login';
-    dashboardPath = '/react-graphql/';
-    privatePath = '/react-graphql/private';  
-}else if (process.env.NODE_ENV === 'testing'){
+var node_env = process.env.NODE_ENV;
+
+//if ( node_env === 'localhost') {
+//    loginPath = '/react-graphql/login';
+//    dashboardPath = '/react-graphql/';
+//    privatePath = '/react-graphql/private';  
+//}else if ((node_env === 'testing') || (node_env === 'stagging')){
     loginPath = '/reactfront/login';
     dashboardPath = '/reactfront/';
     privatePath = '/reactfront/private';      
-}else{
-    loginPath = '/login';
-    dashboardPath = '/';
-    privatePath = '/private';  
-}
+//}else{
+//    loginPath = '/login';
+//    dashboardPath = '/strange';
+//    privatePath = '/private';  
+//}
 
 // graphql paths 
 const localGraphqlEntry = 'http://localhost:8080/graphqlserver/rest/graphql/root';

@@ -32,5 +32,9 @@ ChangeMe.defaultProps = {
 
 };
 
+ChangeMe.propTypes = {
+//    name: React.PropTypes.string
+};
+
 
 export default ChangeMe;

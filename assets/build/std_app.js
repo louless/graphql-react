@@ -122,14 +122,6 @@
 	    }
 	};
 
-	//const AuthButton = withRouter(({ history }) => (
-	//        fakeAuth.isAuthenticated ? (
-	//                <p>  <button onClick={() => fakeAuth.signOut(history)} >Sign out</button> </p>
-	//              ) : (
-	//                <p>  <button onClick={ () => fakeAuth.signIn(history)} >Sign in</button> </p>
-	//              )
-	//));
-
 	var PrivateRoute = function PrivateRoute(_ref2) {
 	    var Component = _ref2.component,
 	        rest = _objectWithoutProperties(_ref2, ['component']);
@@ -145,18 +137,19 @@
 	                }
 	            } });
 	    };
-
 	    return _react2.default.createElement(_reactRouterDom.Route, _extends({}, rest, { render: function render(props) {
 	            return route(props);
 	        } }));
 	};
-
-	//const PrivateComponentTest = () => {
-	//    return ( <p> here security text! </p>);
-	//};
-
-	//const onSignAction = (newState) => {
-	//      fakeAuth.isAuthenticated = newState;
+	//
+	//const onSignAction = (newState)  => {
+	//    
+	//    withRouter( ({history}) => {
+	//        if (newState === 'false'){
+	//            signout( history );
+	//        }  
+	//    });
+	//      
 	//};    
 
 	_reactDom2.default.render(_react2.default.createElement(
@@ -169,8 +162,6 @@
 	        _react2.default.createElement(PrivateRoute, { path: dashboardPath, component: Entry })
 	    )
 	), document.getElementById('app'));
-
-	// <PrivateRoute path={dashboardPath} component={Entry} />
 
 	// 
 	//       <!--<AuthButton />-->
@@ -22372,6 +22363,8 @@
 
 	var _reactApollo = __webpack_require__(200);
 
+	var _reactRouterDom = __webpack_require__(266);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -22381,6 +22374,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var config = __webpack_require__(196);
 
 	var TraderDashboard = function (_React$Component) {
 	  _inherits(TraderDashboard, _React$Component);
@@ -22427,6 +22422,9 @@
 	      }
 	    }
 	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {}
+	  }, {
 	    key: 'onChangeCurWatchList',
 	    value: function onChangeCurWatchList(id) {
 	      this.setState({ currentWatchListID: id });
@@ -22451,7 +22449,12 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
+	      if (this.state.isLogged === 'false') {
+	        return _react2.default.createElement(_reactRouterDom.Redirect, { to: {
+	            pathname: config.loginPath,
+	            state: {}
+	          } });
+	      } else return _react2.default.createElement(
 	        'div',
 	        { className: 'container-fluid' },
 	        _react2.default.createElement(_Header2.default, { onSignAct: this.onSignAction, isLogged: this.state.isLogged }),
@@ -24963,19 +24966,21 @@
 	var loginPath;
 	var dashboardPath;
 	var privatePath;
-	if (process.env.NODE_ENV === 'localhost') {
-	    loginPath = '/react-graphql/login';
-	    dashboardPath = '/react-graphql/';
-	    privatePath = '/react-graphql/private';
-	} else if (process.env.NODE_ENV === 'testing') {
-	    loginPath = '/reactfront/login';
-	    dashboardPath = '/reactfront/';
-	    privatePath = '/reactfront/private';
-	} else {
-	    loginPath = '/login';
-	    dashboardPath = '/';
-	    privatePath = '/private';
-	}
+	var node_env = process.env.NODE_ENV;
+
+	//if ( node_env === 'localhost') {
+	//    loginPath = '/react-graphql/login';
+	//    dashboardPath = '/react-graphql/';
+	//    privatePath = '/react-graphql/private';  
+	//}else if ((node_env === 'testing') || (node_env === 'stagging')){
+	loginPath = '/reactfront/login';
+	dashboardPath = '/reactfront/';
+	privatePath = '/reactfront/private';
+	//}else{
+	//    loginPath = '/login';
+	//    dashboardPath = '/strange';
+	//    privatePath = '/private';  
+	//}
 
 	// graphql paths 
 	var localGraphqlEntry = 'http://localhost:8080/graphqlserver/rest/graphql/root';
@@ -36364,7 +36369,7 @@
 
 	    function testClick() {
 	        var isLogged = ApiSvc.isAlreadyLogged();
-	        showMessage(isLogged);
+	        //  showMessage(isLogged);
 	        //            ApiSvc.getAccountPositions(3).then( res => {
 	        //                positionList = res.body;
 	        //                console.log('position list');
@@ -36402,7 +36407,7 @@
 	            _react2.default.createElement(
 	                'button',
 	                { className: 'btn', onClick: testClick },
-	                'test log state'
+	                'test CORS marx app'
 	            ),
 	            _react2.default.createElement(
 	                'button',
@@ -36482,19 +36487,18 @@
 	    }, {
 	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate() {
-	            var _this2 = this;
-
 	            //        if (this.state.isLogged){
-	            ApiSvc.getAccountPositions(this.state.account).then(function (res) {
-	                var positList = res;
-	                if (positList === null) return;
-	                if (!Array.isArray(positList)) {
-	                    console.log('getAccountPositions: not JSON response. Possible need log in again...');
-	                    return;
-	                }
-	                positList = Position.updatePositionList(positList);
-	                _this2.setState({ positionList: positList });
-	            });
+	            /*      ApiSvc.getAccountPositions(this.state.account).then( res => {
+	                      var positList = res;
+	                      if (positList === null) 
+	                          return;
+	                      if ( !Array.isArray(positList)){
+	                          console.log('getAccountPositions: not JSON response. Possible need log in again...');
+	                          return;
+	                      }
+	                      positList = Position.updatePositionList(positList);
+	                      this.setState( {positionList: positList} );
+	                  });*/
 	            //        }    
 	        }
 	    }, {
@@ -36988,6 +36992,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var ApiSvc = __webpack_require__(187);
+	var config = __webpack_require__(196);
 
 	var Signin = function (_React$Component) {
 	    _inherits(Signin, _React$Component);
@@ -37012,7 +37017,6 @@
 	        value: function handleSubmit() {
 	            var succ;
 	            if (this.state.username === '' || this.state.password === '') succ = false;else {
-	                succ = false;
 	                succ = true;
 	                //            if ( !ApiSvc.isAlreadyLogged() ){
 	                //                succ = ApiSvc.login(this.state.username, this.state.password);
@@ -37043,7 +37047,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _ref = this.props.location.state || { from: { pathname: '/reactfront' } },
+	            var _ref = this.props.location.state || { from: { pathname: config.dashboardPath } },
 	                from = _ref.from;
 
 	            if (this.state.redirectToReferrer) {
