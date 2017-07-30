@@ -22724,6 +22724,18 @@
 	//    return cookie.substr(0, cookie.indexOf(';'));
 	//};
 
+
+	var testCorsGraphqlServer = function testCorsGraphqlServer() {
+	    request.get('http://deploy.marx.tech:8080/GraphqlServer/rest/graphql/test').then(function (res) {
+	        console.log(res.text);
+	        alert(res.text);
+	        return res;
+	    }).catch(function (err) {
+	        console.log('error login' + err);
+	        alert(err);
+	    });
+	};
+
 	var isAlreadyLogged = function isAlreadyLogged() {
 	    request.get(config.dataMgmtUrl)
 	    //  .withCredentials()
@@ -22923,6 +22935,7 @@
 	    });
 	};
 
+	module.exports.testCorsGraphqlServer = testCorsGraphqlServer;
 	module.exports.isAlreadyLogged = isAlreadyLogged;
 	module.exports.login = login;
 	module.exports.logout = logout;
@@ -36369,6 +36382,11 @@
 	        showMessage(succ);
 	    };
 
+	    function testCorsGraphqlServerClick() {
+	        ApiSvc.testCorsGraphqlServer();
+	        return;
+	    }
+
 	    return _react2.default.createElement(
 	        'div',
 	        { className: 'panel panel-default' },
@@ -36390,6 +36408,11 @@
 	                'button',
 	                { className: 'btn', onClick: loginClick },
 	                'do log in as test'
+	            ),
+	            _react2.default.createElement(
+	                'button',
+	                { className: 'btn', onClick: testCorsGraphqlServerClick },
+	                'test CORS graphqlserver app'
 	            )
 	        )
 	    );

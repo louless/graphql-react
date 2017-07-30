@@ -21,6 +21,20 @@ let cookie;
 //    return cookie.substr(0, cookie.indexOf(';'));
 //};
 
+
+const testCorsGraphqlServer = () => {
+    request.get('http://deploy.marx.tech:8080/GraphqlServer/rest/graphql/test')
+            .then ( ( res ) => {
+                console.log(res.text);
+                alert(res.text);
+                return res;
+            })
+            .catch( (err) => {
+                console.log('error login' + err);
+                alert(err);        
+            });
+};
+
 const isAlreadyLogged = () => {
     request.get(config.dataMgmtUrl)
           //  .withCredentials()
@@ -330,6 +344,7 @@ const getAccountPositions = (accountID) => {
             });
 };
 
+module.exports.testCorsGraphqlServer = testCorsGraphqlServer;
 module.exports.isAlreadyLogged = isAlreadyLogged;
 module.exports.login = login;
 module.exports.logout = logout;

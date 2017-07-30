@@ -32,6 +32,12 @@ const Blotter = () => {
         showMessage(succ); 
     };
     
+    function testCorsGraphqlServerClick(){
+        ApiSvc.testCorsGraphqlServer();
+        return;
+    }
+    
+    
     
   return (
     <div className="panel panel-default">
@@ -39,7 +45,8 @@ const Blotter = () => {
       <div className="panel-body">
         Panel content
         <button className="btn" onClick={testClick}>test log state</button>
-        <button className="btn" onClick={loginClick}>do log in as test</button>         
+        <button className="btn" onClick={loginClick}>do log in as test</button>  
+        <button className="btn" onClick={testCorsGraphqlServerClick}>test CORS graphqlserver app</button>
       </div>
     </div>
   );
