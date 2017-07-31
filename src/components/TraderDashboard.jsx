@@ -10,7 +10,7 @@ import TimeAndSales from './TimeAndSales.jsx';
 import Signin from './Signin.jsx';
 import apiSvc from '../../assets/js/services/tradingServer/apiSvc';
 import { gql, graphql } from 'react-apollo';
-import { Redirect} from 'react-router-dom';
+//import { Redirect, withRouter} from 'react-router-dom';
 const config = require('../../assets/js/services/tradingServer/config.js');
 
 class TraderDashboard extends React.Component {
@@ -19,6 +19,7 @@ class TraderDashboard extends React.Component {
     this.onSignAction = this.onSignAction.bind(this);
     this.onChangeCurWatchList = this.onChangeCurWatchList.bind(this);
     this.onGetData = this.onGetData.bind(this);
+    console.log(JSON.stringify(props));
     this.state = {
       watchlists: [],
       currentWatchListID: 0,
@@ -32,7 +33,6 @@ class TraderDashboard extends React.Component {
   }
   
   componentDidMount() {
-      //console.log(this.props);
      // var testLogged = apiSvc.isAlreadyLogged(); 
      // this.setState( { isLoggedIn: testLogged} );
   }
@@ -47,8 +47,11 @@ class TraderDashboard extends React.Component {
             });
       }
   }
-  componentDidUpdate(){
-     
+  componentDidUpdate(prevProps, prevState) {
+      if ((prevState.isLogged === true) && (this.state.isLogged === 'false')) {
+          const history = this.props.history;
+          setTimeout(history.push(config.loginPath), 100);
+      }
   }
 
   onChangeCurWatchList (id) {
@@ -58,7 +61,7 @@ class TraderDashboard extends React.Component {
   onSignAction(newState){
         this.setState({isLogged: newState});
         const {location} = this.props;
-        location.state = {isAuth: newState};  
+        location.state = {isAuth: newState};          
   }
   
   onGetData(data){
@@ -70,13 +73,7 @@ class TraderDashboard extends React.Component {
   }
 
   render() {    
-        if ( this.state.isLogged === 'false'){
-            return ( <Redirect to={ {
-                            pathname: config.loginPath,
-                            state: { }
-                      } } />);
-        }else
-            return (
+      return (
           <div className="container-fluid">
             <Header onSignAct={this.onSignAction} isLogged={this.state.isLogged}/>
             <div className="well">
@@ -116,6 +113,5 @@ const RootQ = gql`{
         }
     }`
 ;
-
 
 export default graphql(RootQ)(TraderDashboard);

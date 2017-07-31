@@ -28,7 +28,7 @@ const loginPath = config.loginPath;
 const dashboardPath = config.dashboardPath;
 
 const Entry= ({...props}) => {
-      return ( <ApolloProvider client={client} >
+      return ( <ApolloProvider client={client}>
                     <TraderDashboard {...props}/>
                 </ApolloProvider> );
     };
@@ -55,42 +55,28 @@ const PrivateRoute = ({component:Component, ...rest}) => {
                     }
                     return (
                     (fakeAuth.isAuthenticated) ? (
-                       (<Component {...props}/>)
-                    ) : (
-                       <Redirect to={ {
-                            pathname: loginPath,
-                            state: { from: props.location,
-                                     isAuth: fakeAuth.isAuthenticated
-                                    }
-                      } } />
-                    ));
+                           (<Component {...props}/>)
+                        ) : (
+                           <Redirect to={ {
+                                pathname: loginPath,
+                                state: { from: props.location,
+                                         isAuth: fakeAuth.isAuthenticated
+                                        }
+                            } } />
+                        ));
         };
     return ( <Route {...rest} render={ (props) => route(props) } /> );
 };
-//
-//const onSignAction = (newState)  => {
-//    
-//    withRouter( ({history}) => {
-//        if (newState === 'false'){
-//            signout( history );
-//        }  
-//    });
-//      
-//};    
 
 ReactDom.render( (
         <Router>
             <div>
                 <Route path={loginPath} component={Signin} />   
-                <PrivateRoute path={dashboardPath} component={Entry} />
+                <PrivateRoute exact path={dashboardPath} component={Entry} />
             </div>
         </Router>
         ), document.getElementById('app')
  );
 
-// 
-//       <!--<AuthButton />-->
-// <Route exact path={dashboardPath} component={Entry} />       
 //  <Link to={privatePath}>Private </Link>
-//<Route exact path={dashboardPath} component={Entry} />  
-// ({location, onSignAction}) => LoginForm({location, onSignAction}) 
+

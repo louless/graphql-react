@@ -141,16 +141,6 @@
 	            return route(props);
 	        } }));
 	};
-	//
-	//const onSignAction = (newState)  => {
-	//    
-	//    withRouter( ({history}) => {
-	//        if (newState === 'false'){
-	//            signout( history );
-	//        }  
-	//    });
-	//      
-	//};    
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouterDom.BrowserRouter,
@@ -159,16 +149,11 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_reactRouterDom.Route, { path: loginPath, component: _Signin2.default }),
-	        _react2.default.createElement(PrivateRoute, { path: dashboardPath, component: Entry })
+	        _react2.default.createElement(PrivateRoute, { exact: true, path: dashboardPath, component: Entry })
 	    )
 	), document.getElementById('app'));
 
-	// 
-	//       <!--<AuthButton />-->
-	// <Route exact path={dashboardPath} component={Entry} />       
 	//  <Link to={privatePath}>Private </Link>
-	//<Route exact path={dashboardPath} component={Entry} />  
-	// ({location, onSignAction}) => LoginForm({location, onSignAction})
 
 /***/ },
 /* 1 */
@@ -22363,8 +22348,6 @@
 
 	var _reactApollo = __webpack_require__(200);
 
-	var _reactRouterDom = __webpack_require__(266);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
@@ -22375,6 +22358,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	//import { Redirect, withRouter} from 'react-router-dom';
 	var config = __webpack_require__(196);
 
 	var TraderDashboard = function (_React$Component) {
@@ -22388,6 +22372,7 @@
 	    _this.onSignAction = _this.onSignAction.bind(_this);
 	    _this.onChangeCurWatchList = _this.onChangeCurWatchList.bind(_this);
 	    _this.onGetData = _this.onGetData.bind(_this);
+	    console.log(JSON.stringify(props));
 	    _this.state = {
 	      watchlists: [],
 	      currentWatchListID: 0,
@@ -22423,7 +22408,21 @@
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {}
+	    value: function componentDidUpdate(prevProps, prevState) {
+	      console.log("prevState: ");
+	      console.log(prevState);
+	      if (prevState.isLogged === true && this.state.isLogged === 'false') {
+
+	        console.log("componentDidUpdate before push");
+	        //            (withRouter( ({history}) => {
+	        console.log(JSON.stringify(this.props.history));
+	        var history = this.props.history;
+
+	        setTimeout(history.push(config.loginPath), 100);
+	        //                }) )();
+	        console.log("componentDidUpdate stop after push");
+	      }
+	    }
 	  }, {
 	    key: 'onChangeCurWatchList',
 	    value: function onChangeCurWatchList(id) {
@@ -22433,8 +22432,11 @@
 	    key: 'onSignAction',
 	    value: function onSignAction(newState) {
 	      this.setState({ isLogged: newState });
+
+	      console.log('onSignAction.before location');
 	      var location = this.props.location;
 
+	      console.log('onSignAction.after location');
 	      location.state = { isAuth: newState };
 	    }
 	  }, {
@@ -22449,12 +22451,16 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (this.state.isLogged === 'false') {
-	        return _react2.default.createElement(_reactRouterDom.Redirect, { to: {
-	            pathname: config.loginPath,
-	            state: {}
-	          } });
-	      } else return _react2.default.createElement(
+	      //        if ( this.state.isLogged === 'false'){
+	      //            
+	      //            
+	      //        }
+	      //            return ( <Redirect to={ {
+	      //                            pathname: config.loginPath,
+	      //                            state: { from : this.props.location}
+	      //         } } />//);
+	      //        }else
+	      return _react2.default.createElement(
 	        'div',
 	        { className: 'container-fluid' },
 	        _react2.default.createElement(_Header2.default, { onSignAct: this.onSignAction, isLogged: this.state.isLogged }),
@@ -24977,8 +24983,8 @@
 	dashboardPath = '/reactfront/';
 	privatePath = '/reactfront/private';
 	//}else{
-	//    loginPath = '/login';
-	//    dashboardPath = '/strange';
+	//    loginPath = '/loginError';
+	//    dashboardPath = '/Error';
 	//    privatePath = '/private';  
 	//}
 
@@ -27156,11 +27162,10 @@
 
 	var QueryBatcher = (function () {
 	    function QueryBatcher(_a) {
-	        var batchInterval = _a.batchInterval, _b = _a.batchMax, batchMax = _b === void 0 ? 0 : _b, batchFetchFunction = _a.batchFetchFunction;
+	        var batchInterval = _a.batchInterval, batchFetchFunction = _a.batchFetchFunction;
 	        this.queuedRequests = [];
 	        this.queuedRequests = [];
 	        this.batchInterval = batchInterval;
-	        this.batchMax = batchMax;
 	        this.batchFetchFunction = batchFetchFunction;
 	    }
 	    QueryBatcher.prototype.enqueueRequest = function (request) {
@@ -27174,9 +27179,6 @@
 	        });
 	        if (this.queuedRequests.length === 1) {
 	            this.scheduleQueueConsumption();
-	        }
-	        if (this.queuedRequests.length === this.batchMax) {
-	            this.consumeQueue();
 	        }
 	        return fetchRequest.promise;
 	    };
@@ -27206,9 +27208,7 @@
 	    QueryBatcher.prototype.scheduleQueueConsumption = function () {
 	        var _this = this;
 	        setTimeout(function () {
-	            if (_this.queuedRequests.length) {
-	                _this.consumeQueue();
-	            }
+	            _this.consumeQueue();
 	        }, this.batchInterval);
 	    };
 	    return QueryBatcher;
@@ -27250,18 +27250,13 @@
 	};
 	var HTTPBatchedNetworkInterface = (function (_super) {
 	    __extends$1(HTTPBatchedNetworkInterface, _super);
-	    function HTTPBatchedNetworkInterface(_a) {
-	        var uri = _a.uri, _b = _a.batchInterval, batchInterval = _b === void 0 ? 10 : _b, _c = _a.batchMax, batchMax = _c === void 0 ? 0 : _c, fetchOpts = _a.fetchOpts;
+	    function HTTPBatchedNetworkInterface(uri, batchInterval, fetchOpts) {
 	        var _this = _super.call(this, uri, fetchOpts) || this;
 	        if (typeof batchInterval !== 'number') {
 	            throw new Error("batchInterval must be a number, got " + batchInterval);
 	        }
-	        if (typeof batchMax !== 'number') {
-	            throw new Error("batchMax must be a number, got " + batchMax);
-	        }
 	        _this.batcher = new QueryBatcher({
 	            batchInterval: batchInterval,
-	            batchMax: batchMax,
 	            batchFetchFunction: _this.batchQuery.bind(_this),
 	        });
 	        return _this;
@@ -27393,12 +27388,7 @@
 	    if (!options) {
 	        throw new Error('You must pass an options argument to createNetworkInterface.');
 	    }
-	    return new HTTPBatchedNetworkInterface({
-	        uri: options.uri,
-	        batchInterval: options.batchInterval,
-	        batchMax: options.batchMax,
-	        fetchOpts: options.opts || {},
-	    });
+	    return new HTTPBatchedNetworkInterface(options.uri, options.batchInterval, options.opts || {});
 	}
 
 	function isQueryResultAction(action) {
@@ -27860,7 +27850,7 @@
 	                else {
 	                    if (context.fragmentMatcherFunction) {
 	                        if (!isProduction()) {
-	                            console.warn("Missing field " + resultFieldKey + " in " + JSON.stringify(result, null, 2).substring(0, 100));
+	                            console.warn("Missing field " + resultFieldKey);
 	                        }
 	                    }
 	                }
@@ -30295,7 +30285,7 @@
 	    return QueryManager;
 	}());
 
-	var version = "1.5.0";
+	var version = 'local';
 
 	var __assign$13 = (undefined && undefined.__assign) || Object.assign || function(t) {
 	    for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -33105,12 +33095,10 @@
 
 	/**
 	 * UnionMembers :
-	 *   - `|`? NamedType
+	 *   - NamedType
 	 *   - UnionMembers | NamedType
 	 */
 	function parseUnionMembers(lexer) {
-	  // Optional leading pipe
-	  skip(lexer, _lexer.TokenKind.PIPE);
 	  var members = [];
 	  do {
 	    members.push(parseNamedType(lexer));
@@ -33208,12 +33196,10 @@
 
 	/**
 	 * DirectiveLocations :
-	 *   - `|`? Name
+	 *   - Name
 	 *   - DirectiveLocations | Name
 	 */
 	function parseDirectiveLocations(lexer) {
-	  // Optional leading pipe
-	  skip(lexer, _lexer.TokenKind.PIPE);
 	  var locations = [];
 	  do {
 	    locations.push(parseName(lexer));

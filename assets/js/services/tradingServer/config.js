@@ -10,7 +10,7 @@ const orderMgmtRestUrl = serverUrl + 'omsrestservices/rest/';
 var loginPath;
 var dashboardPath;
 var privatePath;
-var node_env = process.env.NODE_ENV;
+const node_env = process.env.NODE_ENV;
 
 //if ( node_env === 'localhost') {
 //    loginPath = '/react-graphql/login';
@@ -21,8 +21,8 @@ var node_env = process.env.NODE_ENV;
     dashboardPath = '/reactfront/';
     privatePath = '/reactfront/private';      
 //}else{
-//    loginPath = '/login';
-//    dashboardPath = '/strange';
+//    loginPath = '/loginError';
+//    dashboardPath = '/Error';
 //    privatePath = '/private';  
 //}
 

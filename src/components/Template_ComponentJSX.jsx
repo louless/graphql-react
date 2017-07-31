@@ -10,15 +10,15 @@ class ChangeMe extends React.Component{
     }     
     
     componentDidMount() {    
-        // here actions after mounted component
+        // here actions after mounted component. Best place for remote calling
     }
     
-    componentWillUpdate(){
-        // here actions before update state
+    componentWillUpdate(nextProps, nextState){
+        // here actions before update state or props
     }
     
-    componentDidUpdate(){
-        // here actions afted update state
+    componentDidUpdate(prevProps, prevState){
+        // here actions afted update state or props
     }
    
     render() {
