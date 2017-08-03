@@ -3,16 +3,16 @@
 var restWrapper = function (data, method, uri) {
 	switch (method) {
     case "GET" :
-     console.log("GET / URI : ", uri);
-     console.log("Data = ", data);
+     console.log("GET / URI : ", uri)
+     console.log("Data = ", data)
      break;
     case "POST" :
-     console.log("PUT / URI : ", uri);
-     console.log("Data = ", data);
+     console.log("PUT / URI : ", uri)
+     console.log("Data = ", data)
      break;
     default :
 	}; //end switch
-	return data;
+	return data
 };
 
 
@@ -50,14 +50,14 @@ REST.Request = function (){
 	this.cookies = [];
 	this.headers = [];
 	this.entity = null;
-};
+}
 
 REST.Request.prototype = {
 		execute : function(callback){
 			var request = new XMLHttpRequest();
 			var url = this.uri;
 
-            if (REST.antiBrowserCache === true) {
+            if (REST.antiBrowserCache == true) {
                 request.url = url;
             }
 
@@ -67,7 +67,7 @@ REST.Request.prototype = {
 				url += "=" + REST.Encoding.encodePathParamValue(this.matrixParameters[i][1]);
 			}
 			for(var i=0;i<this.queryParameters.length;i++){
-				if(i === 0)
+				if(i == 0)
 					url += "?";
 				else
 					url += "&";
@@ -82,9 +82,9 @@ REST.Request.prototype = {
 			var acceptSet = false;
 			var contentTypeSet = false;
 			for(var i=0;i<this.headers.length;i++){
-				if(this.headers[i][0].toLowerCase() === 'accept')
+				if(this.headers[i][0].toLowerCase() == 'accept')
 					acceptSet = this.headers[i][1];
-				if(this.headers[i][0].toLowerCase() === 'content-type')
+				if(this.headers[i][0].toLowerCase() == 'content-type')
 					contentTypeSet = this.headers[i][1];
 				request.setRequestHeader(REST.Encoding.encodeHeaderName(this.headers[i][0]),
 						REST.Encoding.encodeHeaderValue(this.headers[i][1]));
@@ -97,9 +97,9 @@ REST.Request.prototype = {
 				throw "Cannot have both an entity and form parameters";
 			// form
 			if(this.formParameters.length > 0 || this.forms.length > 0){
-				if(contentTypeSet && contentTypeSet !== "application/x-www-form-urlencoded")
+				if(contentTypeSet && contentTypeSet != "application/x-www-form-urlencoded")
 					throw "The ContentType that was set by header value ("+contentTypeSet+") is incompatible with form parameters";
-				if(this.contentTypeHeader && this.contentTypeHeader !== "application/x-www-form-urlencoded")
+				if(this.contentTypeHeader && this.contentTypeHeader != "application/x-www-form-urlencoded")
 					throw "The ContentType that was set with setContentType ("+this.contentTypeHeader+") is incompatible with form parameters";
 				contentTypeSet = "application/x-www-form-urlencoded";
 				request.setRequestHeader('Content-Type', contentTypeSet);
@@ -808,9 +808,9 @@ IDataManagementRESTServices.saveWatchList = function(_params){
    request.setEntity(params.$entity);
  request.setURI(uri); 
  
- //if(params.$username && params.$password)
-//   request.setCredentials(params.$username, params.$password);
- request.setCredentials("test", "test");
+ if(params.$username && params.$password)
+   request.setCredentials(params.$username, params.$password);
+ //request.setCredentials("test", "test");
  if(params.$accepts)
   request.setAccepts(params.$accepts);
  else
@@ -832,8 +832,8 @@ if (REST.antiBrowserCache == true) {
   var callback = function(httpCode, xmlHttpRequest, value){ returnValue = value;};
   request.execute(callback);
   //alert(request.responseText);
- // console.log("saveWatchList result = ");
- // console.log(returnValue);
+  console.log("saveWatchList result = ");
+  console.log(returnValue);
   return restWrapper(returnValue,request.method,uri);
  }
 };
@@ -2487,10 +2487,10 @@ IDataManagementRESTServices.getLoggedInUserRoles = function(_params){
   request.setAccepts(params.$accepts);
  else
   request.setAccepts('application/json');
-if (REST.antiBrowserCache === true) {
+if (REST.antiBrowserCache == true) {
   request.addQueryParameter('resteasy_jsapi_anti_cache', (new Date().getTime()));
     var cached_obj = REST._get_cache_signature(REST._generate_cache_signature(uri));
-    if (cached_obj !== null) { request.addHeader('If-Modified-Since', cached_obj[1]['Last-Modified']); request.addHeader('If-None-Match', cached_obj[1]['Etag']);}
+    if (cached_obj != null) { request.addHeader('If-Modified-Since', cached_obj[1]['Last-Modified']); request.addHeader('If-None-Match', cached_obj[1]['Etag']);}
 }
  if(params.$contentType)
   request.setContentType(params.$contentType);
@@ -2523,10 +2523,10 @@ IDataManagementRESTServices.getTopLevelUsers = function(_params){
   request.setAccepts(params.$accepts);
  else
   request.setAccepts('application/json');
-if (REST.antiBrowserCache === true) {
+if (REST.antiBrowserCache == true) {
   request.addQueryParameter('resteasy_jsapi_anti_cache', (new Date().getTime()));
     var cached_obj = REST._get_cache_signature(REST._generate_cache_signature(uri));
-    if (cached_obj !== null) { request.addHeader('If-Modified-Since', cached_obj[1]['Last-Modified']); request.addHeader('If-None-Match', cached_obj[1]['Etag']);}
+    if (cached_obj != null) { request.addHeader('If-Modified-Since', cached_obj[1]['Last-Modified']); request.addHeader('If-None-Match', cached_obj[1]['Etag']);}
 }
  if(params.$contentType)
   request.setContentType(params.$contentType);

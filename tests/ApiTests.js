@@ -34,7 +34,10 @@ const getFirstCookie = (res) => {
 const doLogin = () => {
     return new Promise((resolve, reject) => {
         request.get(config.dataMgmtUrl)
-                .timeout(20000)
+                .timeout({
+                        response: 10000,  // Wait 10 seconds for the server to start sending,
+                        deadline: 60000  // but allow 1 minute for the file to finish loading.
+                      })
                 .then(getFirstCookie)
                 .then(sessionCookie => {
                     request.post(config.loginUrl)
@@ -59,7 +62,10 @@ const doLogin = () => {
 describe('get /etsdatamanagement/ without sending session cookie', () => {
     it('responds with 200, JSESSIONID cookie, and login form html', () => {
         return request.get(config.dataMgmtUrl)
-                .timeout(20000)
+                .timeout({
+                        response: 5000,  // Wait 5 seconds for the server to start sending,
+                        deadline: 60000  // but allow 1 minute for the file to finish loading.
+                      })
                 .redirects(0)
                 .then( (res) => {
                     expect(res.status).to.equal(200);
@@ -75,7 +81,10 @@ describe('get /etsdatamanagement/ without sending session cookie', () => {
 describe('get /etsdatamanagement/ with invalid session cookie sent', () => {
     it('responds with 200, JSESSIONID cookie, and login form html', () => {
         return request.get(config.dataMgmtUrl)
-                .timeout(20000)
+                .timeout({
+                        response: 10000,  // Wait 10 seconds for the server to start sending,
+                        deadline: 60000  // but allow 1 minute for the file to finish loading.
+                      })
                 .redirects(0)
                 .set('Cookie', 'oV5PUvDbVf6skF2ARgbODqYA')
                 .then(res => {
@@ -94,7 +103,10 @@ describe('login with good username and password', () => {
     // get session cookie first
     beforeEach(done => {
         request.get(config.dataMgmtUrl)
-                .timeout(20000)
+                .timeout({
+                        response: 10000,  // Wait 10 seconds for the server to start sending,
+                        deadline: 60000  // but allow 1 minute for the file to finish loading.
+                      })
                 .then(res => {
                     this.sessionCookie = getFirstCookie(res);
                     done();
@@ -103,7 +115,10 @@ describe('login with good username and password', () => {
 
     it('does a redirect', () => {
         request.post(config.loginUrl)
-                .timeout(20000)
+                .timeout({
+                        response: 10000,  // Wait 10 seconds for the server to start sending,
+                        deadline: 60000  // but allow 1 minute for the file to finish loading.
+                      })
                 .redirects(0)
                 .set('Content-Type', 'application/x-www-form-urlencoded')
                 .set('Cookie', this.sessionCookie)
@@ -119,7 +134,10 @@ describe('login with good username and password', () => {
 
     it('responds with 200 and JSESSIONIDSSO cookie', (done) => {
         request.post(config.loginUrl)
-                .timeout(20000)
+                .timeout({
+                        response: 10000,  // Wait 10 seconds for the server to start sending,
+                        deadline: 60000  // but allow 1 minute for the file to finish loading.
+                      })
                 .redirects(1)
                 .set('Content-Type', 'application/x-www-form-urlencoded')
                 .set('Cookie', this.sessionCookie)
@@ -137,7 +155,10 @@ describe('login with good username and bad password', () => {
     // get session cookie first
     beforeEach(done => {
         request.get(config.dataMgmtUrl)
-                .timeout(20000)
+                .timeout({
+                        response: 10000,  // Wait 10 seconds for the server to start sending,
+                        deadline: 60000  // but allow 1 minute for the file to finish loading.
+                      })
                 .then(res => {
                     this.sessionCookie = getFirstCookie(res);
                     done();
@@ -145,7 +166,10 @@ describe('login with good username and bad password', () => {
     });
     it('responds with 200, no cookies, and logon failure html', (done) => {
         request.post(config.loginUrl)
-                .timeout(20000)
+                .timeout({
+                        response: 10000,  // Wait 10 seconds for the server to start sending,
+                        deadline: 60000  // but allow 1 minute for the file to finish loading.
+                      })
                 .redirects(0)
                 .set('Content-Type', 'application/x-www-form-urlencoded')
                 .set('Cookie', this.sessionCookie)

@@ -15,7 +15,9 @@
     "install ": "install --save",
     "install-dev": "install --save-dev",
     "test": "mocha tests/ApiTests.js",
-    "test graphql": "mocha tests/graphqlTests.js"        
+    "test graphql": "mocha tests/graphqlTests.js",
+    "test etsdatamanagement": "mocha tests/etsdatamanagementTest.js  --timeout 6000",
+    "test etsmarketdata": "mocha tests/etsmarketdataTest.js  --timeout 6000"          
   },
   "author": "",
   "license": "ISC",
