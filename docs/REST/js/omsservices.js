@@ -3,16 +3,16 @@
 var restWrapper = function (data, method, uri) {
 	switch (method) {
     case "GET" :
-     console.log("GET / URI : ", uri);
-     console.log("Data = ", data);
+     console.log("GET / URI : ", uri)
+     console.log("Data = ", data)
      break;
     case "POST" :
-     console.log("PUT / URI (POST) : ", uri);
-     console.log("Data = ", data);
+     console.log("PUT / URI : ", uri)
+     console.log("Data = ", data)
      break;
     default :
 	}; //end switch
-	return data;
+	return data
 };
 
 var REST = {
@@ -28,9 +28,7 @@ REST.getKeys = function (o) {
     if (o !== Object(o))
         throw new TypeError('REST.getKeys called on non-object');
     var ret = [], p;
-    for (p in o) 
-        if (Object.prototype.hasOwnProperty.call(o, p)) 
-            ret.push(p);
+    for (p in o) if (Object.prototype.hasOwnProperty.call(o, p)) ret.push(p);
     return ret;
 };
 
@@ -47,27 +45,28 @@ REST.Request = function (){
 	this.queryParameters = [];
 	this.matrixParameters = [];
 	this.formParameters = [];
-  this.forms = [];
+    this.forms = [];
 	this.cookies = [];
 	this.headers = [];
 	this.entity = null;
-};
+}
 
 REST.Request.prototype = {
 		execute : function(callback){
-        var request = new XMLHttpRequest();
-        var url = this.uri;
+			var request = new XMLHttpRequest();
+			var url = this.uri;
 
-        if (REST.antiBrowserCache === true) {
-            request.url = url;
-        }
-        
-        for(var i=0;i<this.matrixParameters.length;i++){
-    				url += ";" + REST.Encoding.encodePathParamName(this.matrixParameters[i][0]);
-    				url += "=" + REST.Encoding.encodePathParamValue(this.matrixParameters[i][1]);
-    		}
-    		for(var i=0;i<this.queryParameters.length;i++){
-				if(i === 0)
+            if (REST.antiBrowserCache == true) {
+                request.url = url;
+            }
+
+            var restRequest = this;
+			for(var i=0;i<this.matrixParameters.length;i++){
+				url += ";" + REST.Encoding.encodePathParamName(this.matrixParameters[i][0]);
+				url += "=" + REST.Encoding.encodePathParamValue(this.matrixParameters[i][1]);
+			}
+			for(var i=0;i<this.queryParameters.length;i++){
+				if(i == 0)
 					url += "?";
 				else
 					url += "&";
@@ -82,9 +81,9 @@ REST.Request.prototype = {
 			var acceptSet = false;
 			var contentTypeSet = false;
 			for(var i=0;i<this.headers.length;i++){
-				if(this.headers[i][0].toLowerCase() === 'accept')
+				if(this.headers[i][0].toLowerCase() == 'accept')
 					acceptSet = this.headers[i][1];
-				if(this.headers[i][0].toLowerCase() === 'content-type')
+				if(this.headers[i][0].toLowerCase() == 'content-type')
 					contentTypeSet = this.headers[i][1];
 				request.setRequestHeader(REST.Encoding.encodeHeaderName(this.headers[i][0]),
 						REST.Encoding.encodeHeaderValue(this.headers[i][1]));
@@ -97,9 +96,9 @@ REST.Request.prototype = {
 				throw "Cannot have both an entity and form parameters";
 			// form
 			if(this.formParameters.length > 0 || this.forms.length > 0){
-				if(contentTypeSet && contentTypeSet !== "application/x-www-form-urlencoded")
+				if(contentTypeSet && contentTypeSet != "application/x-www-form-urlencoded")
 					throw "The ContentType that was set by header value ("+contentTypeSet+") is incompatible with form parameters";
-				if(this.contentTypeHeader && this.contentTypeHeader !== "application/x-www-form-urlencoded")
+				if(this.contentTypeHeader && this.contentTypeHeader != "application/x-www-form-urlencoded")
 					throw "The ContentType that was set with setContentType ("+this.contentTypeHeader+") is incompatible with form parameters";
 				contentTypeSet = "application/x-www-form-urlencoded";
 				request.setRequestHeader('Content-Type', contentTypeSet);
@@ -158,22 +157,20 @@ REST.Request.prototype = {
 				REST._complete(request, callback);
 			}
 
-      if (REST.debug === true) {
-        REST.lastRequest = request;
-      }
+            if (REST.debug == true) { REST.lastRequest = request; }
 
-      if (REST.antiBrowserCache === true && request.status !== 304) {
-        var _cachedHeaders = {
-            "Etag": request.getResponseHeader('Etag'),
-            "Last-Modified": request.getResponseHeader('Last-Modified'),
-            "entity": request.responseText
-        };
+            if (REST.antiBrowserCache == true && request.status != 304) {
+                var _cachedHeaders = {
+                    "Etag":request.getResponseHeader('Etag'),
+                    "Last-Modified":request.getResponseHeader('Last-Modified'),
+                    "entity":request.responseText
+                };
 
-      var signature = REST._generate_cache_signature(url);
-      REST._remove_deprecated_cache_signature(signature);
-      REST._addToArray(REST.cacheHeaders, signature, _cachedHeaders);
-      }
-    },
+                var signature = REST._generate_cache_signature(url);
+                REST._remove_deprecated_cache_signature(signature);
+                REST._addToArray(REST.cacheHeaders, signature, _cachedHeaders);
+            }
+        },
 		setAccepts : function(acceptHeader){
 			REST.log("setAccepts("+acceptHeader+")");
 			this.acceptHeader = acceptHeader;
@@ -204,27 +201,27 @@ REST.Request.prototype = {
 		},
 		addCookie : function(name, value){
 			REST.log("addCookie("+name+"="+value+")");
-      REST._addToArray(this.cookies, name, value);
+            REST._addToArray(this.cookies, name, value);
 		},
 		addQueryParameter : function(name, value){
 			REST.log("addQueryParameter("+name+"="+value+")");
-      REST._addToArray(this.queryParameters, name, value);
+            REST._addToArray(this.queryParameters, name, value);
 		},
 		addMatrixParameter : function(name, value){
 			REST.log("addMatrixParameter("+name+"="+value+")");
-      REST._addToArray(this.matrixParameters, name, value);
+            REST._addToArray(this.matrixParameters, name, value);
 		},
 		addFormParameter : function(name, value){
 			REST.log("addFormParameter("+name+"="+value+")");
-      REST._addToArray(this.formParameters, name, value);
+            REST._addToArray(this.formParameters, name, value);
 		},
-    addForm : function(name, value){
+        addForm : function(name, value){
     		REST.log("addForm("+name+"="+value+")");
-        REST._addToArray(this.forms, name, value);
-    },
+            REST._addToArray(this.forms, name, value);
+    	},
 		addHeader : function(name, value){
 			REST.log("addHeader("+name+"="+value+")");
-      REST._addToArray(this.headers, name, value);
+            REST._addToArray(this.headers, name, value);
 		}
 };
 
@@ -248,9 +245,9 @@ REST._generate_cache_signature = function (url) {
 };
 
 REST._remove_deprecated_cache_signature = function (signature) {
-    for (var idx in REST.cacheHeaders) {
+    for (idx in REST.cacheHeaders) {
         var _signature = REST.cacheHeaders[idx][0];
-        if (signature === _signature) {
+        if (signature == _signature) {
             REST.cacheHeaders.splice(idx, 1);
         }
     }
@@ -258,9 +255,9 @@ REST._remove_deprecated_cache_signature = function (signature) {
 };
 
 REST._get_cache_signature = function (signature) {
-    for (var idx in REST.cacheHeaders) {
+    for (idx in REST.cacheHeaders) {
         var _signature = REST.cacheHeaders[idx][0];
-        if (signature === _signature) {
+        if (signature == _signature) {
             return REST.cacheHeaders[idx];
         }
     }
@@ -269,13 +266,13 @@ REST._get_cache_signature = function (signature) {
 
 REST._complete = function(request, callback){
 	REST.log("Request ready state: "+request.readyState);
-	if(request.readyState === 4) {
+	if(request.readyState == 4) {
 		var entity;
 		REST.log("Request status: "+request.status);
 		REST.log("Request response: "+request.responseText);
 		if(request.status >= 200 && request.status < 300){
 			var contentType = request.getResponseHeader("Content-Type");
-			if(contentType !== null){
+			if(contentType != null){
 				if(REST._isXMLMIME(contentType))
 					entity = request.responseXML;
 				else if(REST._isJSONMIME(contentType))
@@ -286,26 +283,26 @@ REST._complete = function(request, callback){
 				entity = request.responseText;
 		}
 
-        if (request.status === 304) {
+        if (request.status == 304) {
             entity = REST._get_cache_signature(REST._generate_cache_signature(request.url))[1]['entity'];
         }
         REST.log("Calling callback with: "+entity);
 		callback(request.status, request, entity);
 	}
-};
+}
 
 REST._isXMLMIME = function(contentType){
-	return contentType === "text/xml"
-			|| contentType === "application/xml"
-			|| (contentType.indexOf("application/") === 0
-				&& contentType.lastIndexOf("+xml") === (contentType.length - 4));
-};
+	return contentType == "text/xml"
+			|| contentType == "application/xml"
+			|| (contentType.indexOf("application/") == 0
+				&& contentType.lastIndexOf("+xml") == (contentType.length - 4));
+}
 
 REST._isJSONMIME = function(contentType){
-	return contentType === "application/json"
-			|| (contentType.indexOf("application/") === 0
-				&& contentType.lastIndexOf("+json") === (contentType.length - 5));
-};
+	return contentType == "application/json"
+			|| (contentType.indexOf("application/") == 0
+				&& contentType.lastIndexOf("+json") == (contentType.length - 5));
+}
 
 /* Encoding */
 
@@ -316,8 +313,9 @@ REST.Encoding.hash = function(a){
 	for(var i=0;i<a.length;i++)
 		ret[a[i]] = 1;
 	return ret;
-};
+}
 
+//
 // rules
 
 REST.Encoding.Alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
@@ -403,14 +401,14 @@ REST.Encoding.HTTPChar = [];
 (function(){
 	for(var i=32;i<127;i++)
 		REST.Encoding.HTTPChar.push(String.fromCharCode(i));
-})();
+})()
 
 // CHAR - separators
 REST.Encoding.HTTPToken = REST.Encoding.hash(REST.Encoding.HTTPChar);
 (function(){
 	for(var i=0;i<REST.Encoding.HTTPSeparators.length;i++)
 		delete REST.Encoding.HTTPToken[REST.Encoding.HTTPSeparators[i]];
-})();
+})()
 
 //
 // functions
@@ -430,7 +428,7 @@ REST.Encoding.encodeHeaderName = function (val){
 	// XMLHttpRequest will fail (http://www.w3.org/TR/XMLHttpRequest/#the-setrequestheader-method)
 	// What we could do here is throw if the value is invalid
 	return val;
-};
+}
 
 //see http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.2
 REST.Encoding.encodeHeaderValue = function (val){
@@ -438,46 +436,46 @@ REST.Encoding.encodeHeaderValue = function (val){
 	// FIXME: implement me. Stef has given up, since it involves latin1, quoted strings, MIME encoding (http://www.ietf.org/rfc/rfc2047.txt)
 	// which mentions a limit on encoded value of 75 chars, which should be split into several lines. This is mad.
 	return val;
-};
+}
 
 // see http://www.ietf.org/rfc/rfc3986.txt
 REST.Encoding.encodeQueryParamNameOrValue = function (val){
 	return REST.Encoding.encodeValue(val, REST.Encoding.QueryHash);
-};
+}
 
 //see http://www.ietf.org/rfc/rfc3986.txt
 REST.Encoding.encodePathSegment = function (val){
 	return REST.Encoding.encodeValue(val, REST.Encoding.PathSegmentHash);
-};
+}
 
 //see http://www.ietf.org/rfc/rfc3986.txt
 REST.Encoding.encodePathParamName = function (val){
 	return REST.Encoding.encodeValue(val, REST.Encoding.PathParamHash);
-};
+}
 
 //see http://www.ietf.org/rfc/rfc3986.txt
 REST.Encoding.encodePathParamValue = function (val){
 	return REST.Encoding.encodeValue(val, REST.Encoding.PathParamValueHash);
-};
+}
 
 REST.Encoding.encodeValue = function (val, allowed, form){
-	if(typeof val !== "string"){
+	if(typeof val != "string"){
 		REST.log("val is not a string");
 		return val;
 	}
-	if(val.length === 0){
+	if(val.length == 0){
 		REST.log("empty string");
 		return val;
 	}
 	var ret = '';
 	for(var i=0;i<val.length;i++){
 		var first = val[i];
-		if(allowed[first] === 1){
+		if(allowed[first] == 1){
 			REST.log("char allowed: "+first);
 			ret = ret.concat(first);
-		}else if(form && (first === ' ' || first === '\n')){
+		}else if(form && (first == ' ' || first == '\n')){
 			// special rules for application/x-www-form-urlencoded
-			if(first === ' ')
+			if(first == ' ')
 				ret += '+';
 			else
 				ret += '%0D%0A';
@@ -506,7 +504,7 @@ REST.Encoding.encodeValue = function (val, allowed, form){
 		}
 	}
 	return ret;
-};
+}
 
 // see http://tools.ietf.org/html/rfc3629
 REST.Encoding.percentUTF8 = function(c){
@@ -531,7 +529,7 @@ REST.Encoding.percentUTF8 = function(c){
 		return REST.Encoding.percentByte(first, second, third, fourth);
 	}
 	throw "Invalid character for UTF-8: "+c;
-};
+}
 
 REST.Encoding.percentByte = function(){
 	var ret = '';
@@ -543,58 +541,53 @@ REST.Encoding.percentByte = function(){
 			ret += "%" + b.toString(16);
 	}
 	return ret;
-};
+}
 
 REST.serialiseXML = function(node){
-	if (typeof XMLSerializer !== "undefined")
+	if (typeof XMLSerializer != "undefined")
 		return (new XMLSerializer()).serializeToString(node) ;
 	else if (node.xml) return node.xml;
 	else throw "XML.serialize is not supported or can't serialize " + node;
-};
+}
 REST.apiURL = 'http://localhost:8080/omsrestservices';
 var IOMSOrderManagementRESTServices = {};
 
-// GET /rest/accounts/{id}/positions
-IOMSOrderManagementRESTServices.getAccountPositions = function (_params) {
-    var params = _params ? _params : {};
-    var request = new REST.Request();
-    request.setMethod('GET');
-    var uri = params.$apiURL ? params.$apiURL : REST.apiURL;
-    uri += '/rest/accounts/';
-    uri += REST.Encoding.encodePathSegment(params.id);
-    uri += '/positions';
-    request.setURI(uri);
-    if (params.$username && params.$password)
-        request.setCredentials(params.$username, params.$password);
-    if (params.$accepts)
-        request.setAccepts(params.$accepts);
-    else
-        request.setAccepts('application/json');
-    if (REST.antiBrowserCache === true) {
-        request.addQueryParameter('resteasy_jsapi_anti_cache', (new Date().getTime()));
-        var cached_obj = REST._get_cache_signature(REST._generate_cache_signature(uri));
-        if (cached_obj !== null) {
-            request.addHeader('If-Modified-Since', cached_obj[1]['Last-Modified']);
-            request.addHeader('If-None-Match', cached_obj[1]['Etag']);
-        }
-    }
-    if (params.$contentType)
-        request.setContentType(params.$contentType);
-    else
-        request.setContentType('text/plain');
-    if (params.$callback) {
-        request.execute(params.$callback);
-    } else {
-        var returnValue;
-        request.setAsync(false);
-        var callback = function (httpCode, xmlHttpRequest, value) {
-            returnValue = value;
-        };
-        request.execute(callback);
-        return restWrapper(returnValue, request.method, uri);
-    }
-};
 
+// GET /rest/accounts/{id}/positions
+IOMSOrderManagementRESTServices.getAccountPositions = function(_params){
+ var params = _params ? _params : {};
+ var request = new REST.Request();
+ request.setMethod('GET');
+ var uri = params.$apiURL ? params.$apiURL : REST.apiURL;
+ uri += '/rest/accounts/';
+ uri += REST.Encoding.encodePathSegment(params.id);
+ uri += '/positions';
+ request.setURI(uri);
+ if(params.$username && params.$password)
+  request.setCredentials(params.$username, params.$password);
+ if(params.$accepts)
+  request.setAccepts(params.$accepts);
+ else
+  request.setAccepts('application/json');
+if (REST.antiBrowserCache == true) {
+  request.addQueryParameter('resteasy_jsapi_anti_cache', (new Date().getTime()));
+    var cached_obj = REST._get_cache_signature(REST._generate_cache_signature(uri));
+    if (cached_obj != null) { request.addHeader('If-Modified-Since', cached_obj[1]['Last-Modified']); request.addHeader('If-None-Match', cached_obj[1]['Etag']);}
+}
+ if(params.$contentType)
+  request.setContentType(params.$contentType);
+ else
+  request.setContentType('text/plain');
+ if(params.$callback){
+  request.execute(params.$callback);
+ }else{
+  var returnValue;
+  request.setAsync(false);
+  var callback = function(httpCode, xmlHttpRequest, value){ returnValue = value;};
+  request.execute(callback);
+  return restWrapper(returnValue,request.method,uri);
+ }
+};
 // GET /rest/companies/{id}/accounts
 IOMSOrderManagementRESTServices.getCompanyAccounts = function(_params){
  var params = _params ? _params : {};
@@ -813,23 +806,26 @@ IOMSOrderManagementRESTServices.placeOrder = function(_params){
   request.setAccepts(params.$accepts);
  else
   request.setAccepts('application/json');
-if (REST.antiBrowserCache == true) {
-  request.addQueryParameter('resteasy_jsapi_anti_cache', (new Date().getTime()));
+ if (REST.antiBrowserCache == true) {
+    request.addQueryParameter('resteasy_jsapi_anti_cache', (new Date().getTime()));
     var cached_obj = REST._get_cache_signature(REST._generate_cache_signature(uri));
-    if (cached_obj != null) { request.addHeader('If-Modified-Since', cached_obj[1]['Last-Modified']); request.addHeader('If-None-Match', cached_obj[1]['Etag']);}
-}
+    if (cached_obj != null) {
+      request.addHeader('If-Modified-Since', cached_obj[1]['Last-Modified']); 
+      request.addHeader('If-None-Match', cached_obj[1]['Etag']);
+    }
+ }
  if(params.$contentType)
   request.setContentType(params.$contentType);
  else
   request.setContentType('application/json');
  if(params.$callback){
-  request.execute(params.$callback);
+   request.execute(params.$callback);
  }else{
-  var returnValue;
-  request.setAsync(false);
-  var callback = function(httpCode, xmlHttpRequest, value){ returnValue = value;};
-  request.execute(callback);
-  return restWrapper(returnValue,request.method,uri);
+   var returnValue;
+   request.setAsync(false);
+   var callback = function(httpCode, xmlHttpRequest, value){ returnValue = value;};
+   request.execute(callback);
+   return restWrapper(returnValue,request.method,uri);
  }
 };
 // POST /rest/orders/placeTrigger
@@ -2001,23 +1997,27 @@ IOMSOrderManagementRESTServices.getOrderEvents = function(_params){
   request.setAccepts(params.$accepts);
  else
   request.setAccepts('application/json');
-if (REST.antiBrowserCache == true) {
-  request.addQueryParameter('resteasy_jsapi_anti_cache', (new Date().getTime()));
+ if (REST.antiBrowserCache == true) {
+    request.addQueryParameter('resteasy_jsapi_anti_cache', (new Date().getTime()));
     var cached_obj = REST._get_cache_signature(REST._generate_cache_signature(uri));
-    if (cached_obj != null) { request.addHeader('If-Modified-Since', cached_obj[1]['Last-Modified']); request.addHeader('If-None-Match', cached_obj[1]['Etag']);}
-}
+    if (cached_obj != null) {
+      request.addHeader('If-Modified-Since', cached_obj[1]['Last-Modified']); 
+      request.addHeader('If-None-Match', cached_obj[1]['Etag']);
+    }
+ }
  if(params.$contentType)
   request.setContentType(params.$contentType);
  else
   request.setContentType('text/plain');
+  
  if(params.$callback){
-  request.execute(params.$callback);
+   request.execute(params.$callback);
  }else{
-  var returnValue;
-  request.setAsync(false);
-  var callback = function(httpCode, xmlHttpRequest, value){ returnValue = value;};
-  request.execute(callback);
-  return restWrapper(returnValue,request.method,uri);
+   var returnValue;
+   request.setAsync(false);
+   var callback = function(httpCode, xmlHttpRequest, value){ returnValue = value;};
+   request.execute(callback);
+   return restWrapper(returnValue,request.method,uri);
  }
 };
 // GET /rest/orders/{id}/calculations
