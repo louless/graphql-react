@@ -8,15 +8,16 @@ const entryDir = './src/main.jsx';
 
 const node_env = process.env.NODE_ENV;
 var pluginArr = [];
-if ((node_env === 'testing') || 
+if ((node_env === 'testing') ||
     (node_env === 'testingmin') ||
-    (node_env === 'stagging')) {
+    (node_env === 'stagging') ||
+    (node_env === 'testui')) {
     // for deploy require remote folder structure:
-    //  --project_name.war 
+    //  --project_name.war
     //    |
     //    |- assets/
     //    |- index.html - for this index page
-    
+
     let fromPath,
         remoteHost,
         remotePort,
@@ -26,6 +27,13 @@ if ((node_env === 'testing') ||
     if (node_env === 'stagging'){
         fromPath = './assets';
         remoteHost = 'stagging.marx.tech';
+        remotePort = '22';
+        remoteUser = 'ec2-user';
+        KeyDir = require('fs').readFileSync('../TradingServer.pem');
+        remotePath = '/opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war/assets';
+    }else if (node_env === 'testui'){
+        fromPath = './assets';
+        remoteHost = 'testui.marx.tech';
         remotePort = '22';
         remoteUser = 'ec2-user';
         KeyDir = require('fs').readFileSync('../TradingServer.pem');
@@ -48,7 +56,7 @@ if ((node_env === 'testing') ||
         before: 'mkdir /opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war /opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war/assets',
         after: 'chmod 775 -R /opt/marx/jboss-eap-6.4-marx/standalone/deployments/reactfront.war',
         cover: false, //important: If the 'cover' of value is false,All files in this folder will be cleared before starting deployment.
-        to: remotePath  
+        to: remotePath
     });
     pluginArr.push(testingDeploy);
 }
@@ -115,8 +123,8 @@ module.exports = {
 //    }
 //    ],
 //    rules: [
-//    
-    ]    
+//
+    ]
   },
   plugins: pluginArr
 };
