@@ -20,12 +20,13 @@ const getFirstCookie = (res) => {
     return cookie.substr(0, cookie.indexOf(';'));
 };
 
-const serverUrl = 'http://stagging.marx.tech:8080/';
+const serverUrl = 'http://testui.marx.tech:8080/';
 const dataMgmtUrl = serverUrl + 'etsdatamanagement/';
 const loginUrl = dataMgmtUrl+'j_security_check';
-const username = "test";
-const password = "test";
-
+//const username = "test";
+//const password = "test";
+const username = "administrator";
+const password = "marx";
 /**
  * utility function to do login
  * 1) send request for base url

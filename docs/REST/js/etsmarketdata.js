@@ -1247,6 +1247,7 @@ IMarketDataRESTServices.updateExchange = function(_params) {
   return restWrapper(returnValue,request.method,uri);
  }
 };
+// warning: unused
 // GET /rest/routes/search
 IMarketDataRESTServices.getMarketDataRoutes = function(_params) {
  var params = _params ? _params : {};
@@ -1333,6 +1334,7 @@ if (REST.antiBrowserCache == true) {
   return returnValue //[{"subtopic":"feedhandler:8787","carrier":"LMAX","supplier":"LMAX","level":12,"marketid":1,"protocol":"com.tradedesksoftware.feedhandler.feed.tcp.MarxFeed","symbol":null,"description":"1 - LMAX"}];
  }
 };
+// warning : unused
 // GET /rest/routes/{symbol}/permitted
 IMarketDataRESTServices.getPermittedRoutes = function(_params) {
  var params = _params ? _params : {};

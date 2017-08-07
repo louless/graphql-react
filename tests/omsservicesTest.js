@@ -25,7 +25,7 @@ describe('Test file omsservices.js', function () {
 //        });
 //    })();
 
-    const baseUrl = "http://stagging.marx.tech:8080/omsrestservices";
+    const baseUrl = "http://testui.marx.tech:8080/omsrestservices";
 
 
         describe('GET ' + baseUrl + "/rest/accounts", () => {

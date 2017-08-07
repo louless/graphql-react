@@ -18,7 +18,7 @@ describe('etsdatamanagementTest.js: ', () => {
         });
     });         
 
-    const baseUrl = "http://stagging.marx.tech:8080/etsdatamanagement";    
+    const baseUrl = "http://testui.marx.tech:8080/etsdatamanagement";
    
      describe('GET ' + baseUrl + "/rest/roles/all", () => {                                        
             it('responds status 200, response is not empty', () => {
