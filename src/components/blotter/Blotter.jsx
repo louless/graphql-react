@@ -67,6 +67,15 @@ const Blotter = () => {
             .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
             .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
     }
+    function watchlistIdsClick(){
+        ApiSvc.getWatchListIds();
+//        $.ajax({
+//                url: config.dataMgmtUrl + "rest/watchlist/ids"
+//            })
+//            .done  (function(data, textStatus, jqXHR)        { alert("Success: " + data) ; })
+//            .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
+//            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
+    }
     
     
   return (
@@ -78,6 +87,7 @@ const Blotter = () => {
         <button className="btn className='btn btn-primary btn-block" onClick={test$Click}>test CORS marx app using JQuery</button>
         <button className="btn className='btn btn-primary btn-block" onClick={loginClick}>do log in as test</button>
         <button className="btn className='btn btn-primary btn-block" onClick={testCorsGraphqlServerClick}>test CORS graphqlserver app</button>
+        <button className="btn className='btn btn-primary btn-block" onClick={watchlistIdsClick}>watchlist Ids</button>
       </div>
     </div>
   );

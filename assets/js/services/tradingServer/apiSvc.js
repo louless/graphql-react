@@ -117,11 +117,11 @@ const getCurrentUserInfo = () => {
 // e.g. http://testing.marx.tech:8080/etsdatamanagement/rest/watchlist/ids
 const getWatchListIds = () => {
     return request.get(config.dataMgmtUrl + 'rest/watchlist/ids')
-            .timeout(5000)
-            .redirects(0) // ? why it here?
+          //  .timeout(5000)
+          //  .redirects(0) // ? why it here?
 //            .set('Cookie', cookie)
 //            .set('Accept', 'application/json') // be default
-            .withCredentials()
+          //  .withCredentials()
             .then( ( res ) => {
                 console.log(res.body);
                 return res.body;
