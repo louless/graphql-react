@@ -57,7 +57,10 @@ const Blotter = () => {
 //
         var jqxhr =
             $.ajax({
-                url: config.dataMgmtUrl
+                url: config.dataMgmtUrl,
+                headers: {
+                    'X-PINGARUNER':'pingpong'
+                }
 //                data: {
 //                    name : "The name",
 //                    desc : "The description"
