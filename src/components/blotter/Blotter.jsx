@@ -76,6 +76,19 @@ const Blotter = () => {
 //            .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
 //            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
     }
+    function watchlistTestFetchClick(){
+        fetch(config.dataMgmtUrl + "rest/watchlist/test", {mode: 'cors'})
+              .then(function(response) {
+                 console.log(response.text);
+                return response.text();
+              })
+              .then(function(text) {
+                console.log('Request successful', text);
+              })
+              .catch(function(error) {
+                console.log('Request failed', error);
+              });
+    }
     
     
   return (
@@ -88,6 +101,7 @@ const Blotter = () => {
         <button className="btn className='btn btn-primary btn-block" onClick={loginClick}>do log in as test</button>
         <button className="btn className='btn btn-primary btn-block" onClick={testCorsGraphqlServerClick}>test CORS graphqlserver app</button>
         <button className="btn className='btn btn-primary btn-block" onClick={watchlistIdsClick}>watchlist Ids</button>
+        <button className="btn className='btn btn-primary btn-block" onClick={watchlistTestFetchClick}>watchlist test Fetch</button>
       </div>
     </div>
   );
