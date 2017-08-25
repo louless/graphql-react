@@ -22785,11 +22785,10 @@
 	var getWatchListIds = function getWatchListIds() {
 	    return request.get(config.dataMgmtUrl + 'rest/watchlist/ids')
 	    //  .timeout(5000)
-	    //  .redirects(0) // ? why it here?
+	    .redirects(0) // ? why it here?
 	    //            .set('Cookie', cookie)
 	    //            .set('Accept', 'application/json') // be default
-	    //  .withCredentials()
-	    .then(function (res) {
+	    .withCredentials().then(function (res) {
 	        console.log(res.body);
 	        return res.body;
 	    }).catch(function (err) {
@@ -24954,13 +24953,13 @@
 	var node_env = process.env.NODE_ENV;
 
 	//if ( node_env === 'localhost') {
-	loginPath = '/react-graphql/login';
-	dashboardPath = '/react-graphql/';
-	privatePath = '/react-graphql/private';
+	//   loginPath = '/react-graphql/login';
+	//   dashboardPath = '/react-graphql/';
+	//   privatePath = '/react-graphql/private';
 	//}else if ((node_env === 'testing') || (node_env === 'stagging')){
-	//   loginPath = '/reactfront/login';
-	//   dashboardPath = '/reactfront/';
-	//   privatePath = '/reactfront/private';
+	loginPath = '/reactfront/login';
+	dashboardPath = '/reactfront/';
+	privatePath = '/reactfront/private';
 	//}else{
 	//    loginPath = '/loginError';
 	//    dashboardPath = '/Error';
