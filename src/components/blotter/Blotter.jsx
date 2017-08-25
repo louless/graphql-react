@@ -80,7 +80,7 @@ const Blotter = () => {
 //            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
     }
     function watchlistTestFetchClick(){
-        fetch(config.dataMgmtUrl + "rest/watchlist/test", {mode: 'cors'})
+        fetch(config.dataMgmtUrl + "rest/watchlisttest", {mode: 'cors'})
               .then(function(response) {
                  console.log(response.text);
                 return response.text();
