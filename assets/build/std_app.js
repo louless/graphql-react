@@ -22390,7 +22390,6 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      //console.log(this.props);
 	      // var testLogged = apiSvc.isAlreadyLogged(); 
 	      // this.setState( { isLoggedIn: testLogged} );
 	    }
@@ -22409,18 +22408,9 @@
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate(prevProps, prevState) {
-	      console.log("prevState: ");
-	      console.log(prevState);
 	      if (prevState.isLogged === true && this.state.isLogged === 'false') {
-
-	        console.log("componentDidUpdate before push");
-	        //            (withRouter( ({history}) => {
-	        console.log(JSON.stringify(this.props.history));
 	        var history = this.props.history;
-
 	        setTimeout(history.push(config.loginPath), 100);
-	        //                }) )();
-	        console.log("componentDidUpdate stop after push");
 	      }
 	    }
 	  }, {
@@ -22432,11 +22422,8 @@
 	    key: 'onSignAction',
 	    value: function onSignAction(newState) {
 	      this.setState({ isLogged: newState });
-
-	      console.log('onSignAction.before location');
 	      var location = this.props.location;
 
-	      console.log('onSignAction.after location');
 	      location.state = { isAuth: newState };
 	    }
 	  }, {
@@ -22451,15 +22438,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      //        if ( this.state.isLogged === 'false'){
-	      //            
-	      //            
-	      //        }
-	      //            return ( <Redirect to={ {
-	      //                            pathname: config.loginPath,
-	      //                            state: { from : this.props.location}
-	      //         } } />//);
-	      //        }else
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'container-fluid' },
@@ -22746,9 +22724,7 @@
 	};
 
 	var isAlreadyLogged = function isAlreadyLogged() {
-	    request.get(config.dataMgmtUrl)
-	    //  .withCredentials()
-	    .then(function (res) {
+	    request.get(config.dataMgmtUrl).withCredentials().then(function (res) {
 	        if (res.header['content-type'].indexOf('text/html') === -1) {
 	            console.log("logged");
 	            return true;
@@ -22807,10 +22783,13 @@
 
 	// e.g. http://testing.marx.tech:8080/etsdatamanagement/rest/watchlist/ids
 	var getWatchListIds = function getWatchListIds() {
-	    return request.get(config.dataMgmtUrl + 'rest/watchlist/ids').timeout(5000).redirects(0) // ? why it here?
+	    return request.get(config.dataMgmtUrl + 'rest/watchlist/ids')
+	    //  .timeout(5000)
+	    //  .redirects(0) // ? why it here?
 	    //            .set('Cookie', cookie)
 	    //            .set('Accept', 'application/json') // be default
-	    .withCredentials().then(function (res) {
+	    //  .withCredentials()
+	    .then(function (res) {
 	        console.log(res.body);
 	        return res.body;
 	    }).catch(function (err) {
@@ -36342,6 +36321,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var ApiSvc = __webpack_require__(187);
+	var config = __webpack_require__(196);
 
 	var Blotter = function Blotter() {
 
@@ -36378,6 +36358,60 @@
 	        return;
 	    }
 
+	    function test$Click() {
+	        //        $.ajax({
+	        //
+	        //            url : config.dataMgmtUrl,
+	        //            type : 'GET',
+	        ////            data : {
+	        ////                'numberOfWords' : 10
+	        ////            },
+	        //            dataType:'text/html',
+	        //            success : function(data) {
+	        //                alert('Data: '+data);
+	        //            },
+	        //            error : function(request, error)
+	        //            {
+	        //                alert("Request: "+JSON.stringify(request));
+	        //            }
+	        //        });
+	        //
+	        var jqxhr = $.ajax({
+	            url: config.dataMgmtUrl,
+	            headers: {
+	                'X-PINGARUNER': 'pingpong'
+	                //                data: {
+	                //                    name : "The name",
+	                //                    desc : "The description"
+	                //                }
+	            } }).done(function (data, textStatus, jqXHR) {
+	            alert("Success: " + data);
+	        }).fail(function (jqXHR, textStatus, errorThrown) {
+	            alert("Error");
+	        }).always(function (jqXHROrData, textStatus, jqXHROrErrorThrown) {
+	            alert("complete");
+	        });
+	    }
+	    function watchlistIdsClick() {
+	        ApiSvc.getWatchListIds();
+	        //        $.ajax({
+	        //                url: config.dataMgmtUrl + "rest/watchlist/ids"
+	        //            })
+	        //            .done  (function(data, textStatus, jqXHR)        { alert("Success: " + data) ; })
+	        //            .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
+	        //            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
+	    }
+	    function watchlistTestFetchClick() {
+	        fetch(config.dataMgmtUrl + "rest/watchlisttest", { mode: 'cors' }).then(function (response) {
+	            console.log(response.text);
+	            return response.text();
+	        }).then(function (text) {
+	            console.log('Request successful', text);
+	        }).catch(function (error) {
+	            console.log('Request failed', error);
+	        });
+	    }
+
 	    return _react2.default.createElement(
 	        'div',
 	        { className: 'panel panel-default' },
@@ -36392,18 +36426,33 @@
 	            'Panel content',
 	            _react2.default.createElement(
 	                'button',
-	                { className: 'btn', onClick: testClick },
+	                { className: 'btn className=\'btn btn-primary btn-block', onClick: testClick },
 	                'test CORS marx app'
 	            ),
 	            _react2.default.createElement(
 	                'button',
-	                { className: 'btn', onClick: loginClick },
+	                { className: 'btn className=\'btn btn-primary btn-block', onClick: test$Click },
+	                'test CORS marx app using JQuery'
+	            ),
+	            _react2.default.createElement(
+	                'button',
+	                { className: 'btn className=\'btn btn-primary btn-block', onClick: loginClick },
 	                'do log in as test'
 	            ),
 	            _react2.default.createElement(
 	                'button',
-	                { className: 'btn', onClick: testCorsGraphqlServerClick },
+	                { className: 'btn className=\'btn btn-primary btn-block', onClick: testCorsGraphqlServerClick },
 	                'test CORS graphqlserver app'
+	            ),
+	            _react2.default.createElement(
+	                'button',
+	                { className: 'btn className=\'btn btn-primary btn-block', onClick: watchlistIdsClick },
+	                'watchlist Ids'
+	            ),
+	            _react2.default.createElement(
+	                'button',
+	                { className: 'btn className=\'btn btn-primary btn-block', onClick: watchlistTestFetchClick },
+	                'watchlist test Fetch'
 	            )
 	        )
 	    );
