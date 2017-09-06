@@ -6,7 +6,7 @@ const config = require('./config.js');
 let cookie;
 
 // CAN"T USE COOKIE DIRECTLY. IT"S BROWSER RESTRICTIONS
-// 
+//
 // utility function for getting first cookie from response
 //const getFirstCookie = ( res ) => {
 //    const cookies = res.headers['set-cookie'];
@@ -31,7 +31,7 @@ const testCorsGraphqlServer = () => {
             })
             .catch( (err) => {
                 console.log('error login' + err);
-                alert(err);        
+                alert(err);
             });
 };
 
@@ -62,7 +62,7 @@ const isAlreadyLogged = () => {
  * 4) return 2 cookies (first response cookie ( JSESSIONSSO ) and one cookie above ( JSESSIONID ))
  * 5...) getting REST data with JSESSIONSSO cookie ( on the session) - magic
  * @param {String} username
- * @param {String} password 
+ * @param {String} password
  * @returns {}
  */
 const login = (username, password) => {
@@ -80,7 +80,7 @@ const login = (username, password) => {
                         .set('Content-Type', 'application/x-www-form-urlencoded')
                         .withCredentials()
                         .send({j_username: username, j_password: password})
-                        .then(res => {                            
+                        .then(res => {
                             return res;
                         })
                         .catch ( err => {
@@ -105,11 +105,11 @@ const logout = () => {
 
 const getCurrentUserInfo = () => {
     return request.get(config.dataMgmtUrl + 'rest/users/current')
-            .timeoCut(5000)
             .redirects(0)
-            .set('Cookie', cookie)
+            .withCredentials()
             .set('Accept', 'application/json')
             .then(res => {
+                console.log(res.body);
                 return res.body;
             });
 };
@@ -118,7 +118,7 @@ const getCurrentUserInfo = () => {
 const getWatchListIds = () => {
     return request.get(config.dataMgmtUrl + 'rest/watchlist/ids')
           //  .timeout(5000)
-            .redirects(0) // ? why it here?
+         //   .redirects(0) // ? why it here?
 //            .set('Cookie', cookie)
 //            .set('Accept', 'application/json') // be default
             .withCredentials()
@@ -335,14 +335,18 @@ const getTicketStates = () => {
  */
 const getAccountPositions = (accountID) => {
     return request.get(config.orderMgmtRestUrl + 'accounts/' + accountID + '/positions')
-            .timeout(5000)
+            //.timeout(5000)
             .redirects(0)
+            .withCredentials()
 //            .set('Cookie', cookie)
 //            .set('Accept', 'application/json') by default
             .then( ( res )=> {
+                console.log(res.body);
                 return res.body;
             });
 };
+
+
 
 module.exports.testCorsGraphqlServer = testCorsGraphqlServer;
 module.exports.isAlreadyLogged = isAlreadyLogged;
