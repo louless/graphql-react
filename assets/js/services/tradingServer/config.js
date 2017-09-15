@@ -28,15 +28,16 @@ const node_env = process.env.NODE_ENV;
 
 // graphql paths 
 const localGraphqlEntry = 'http://localhost:8080/graphqlserver/rest/graphql/root';
-const remoteGraphqlEntry = serverUrl + 'GraphqlServer/rest/graphql/root';
+//const remoteGraphqlEntry = serverUrl + 'GraphqlServer/rest/graphql/root';
+const remoteGraphqlEntry = serverUrl + "etsdatamanagement/rest/graphql/entry";
 
 let graphqlEntryUrl;
 //graphqlEntryUrl = remoteGraphqlEntry;
-if (process.env.NODE_ENV === 'localhost') {
+/*if (process.env.NODE_ENV === 'localhost')
     graphqlEntryUrl = localGraphqlEntry;
-}else{
+else*/
     graphqlEntryUrl = remoteGraphqlEntry;
-}
+
 
 
 

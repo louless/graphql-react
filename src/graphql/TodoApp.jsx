@@ -25,17 +25,17 @@ function TodoApp( { data: { loading, error, WatchLists, refetch } } ) {
             );
 }
 
-// export default graphql(gql`  
-//  query TodoAppQuery {
-//    WatchLists {
-//      id
-//      name
-//    }
-//  }
-//`)(TodoApp);
-export default graphql(gql`{  
-      WatchLists {
-            id
-            name
-        }
-}`)(TodoApp);
+ export default graphql(gql`  
+  query TodoAppQuery {
+    WatchLists {
+      id
+      name
+    }
+  }
+`)(TodoApp);
+//export default graphql(gql`{
+//      WatchLists {
+//            id
+//            name
+//        }
+//}`)(TodoApp);

@@ -4,7 +4,8 @@ var SshWebpackPlugin = require('ssh-webpack-plugin');
 
 // env
 const buildDir = './assets/build/';
-const entryDir = './src/main.jsx';
+//const entryDir = './src/main.jsx';
+const entryDir = './src/graphql/Index.jsx';
 
 const node_env = process.env.NODE_ENV;
 var pluginArr = [];

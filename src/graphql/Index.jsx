@@ -8,5 +8,5 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <TodoApp />
   </ApolloProvider>,
-  document.getElementById('root')
+  document.getElementById('app')
 );

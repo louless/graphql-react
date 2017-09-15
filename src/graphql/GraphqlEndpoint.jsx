@@ -4,7 +4,10 @@ const config = require('../../assets/js/services/tradingServer/config.js');
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: config.graphqlEntryUrl
+    uri: config.graphqlEntryUrl,
+    opts: {
+        credentials: 'same-origin'
+    }
   })
 });
 
