@@ -1,7 +1,8 @@
 import React from 'react';
 import { gql, graphql } from 'react-apollo';
+import Mutation from './Mutation.jsx';
 
-function TodoApp( { data: { loading, error, WatchLists, refetch } } ) {
+function TodoApp( { data: { loading, error, Exchanges = [], refetch } } ) {
 
 //    console.log('enter to todoApp...');
 //    console.log(typeof WatchLists);
@@ -19,23 +20,43 @@ function TodoApp( { data: { loading, error, WatchLists, refetch } } ) {
                     Refresh
                 </button>
                 <ul>
-                    {WatchLists.map((wl) => (<li key={wl.id}> {wl.name} </li>))};
+                    {Exchanges.map((ex) => (<li key={ex.id}> {ex.description} </li>))};
                 </ul>
+                <Mutation tmp={345}/>
             </div>
             );
 }
 
- export default graphql(gql`  
-  query TodoAppQuery {
-    WatchLists {
+// works with deploy Marx
+const MainQ = gql`
+  query TodoAppQuery ($watchListID: Int, $exchangeId: Int){
+    WatchLists (watchListID: $watchListID)  {
       id
       name
     }
+    Exchanges {
+      id
+      description
+    }
+    Instruments (exchangeId: $exchangeId) {
+        id
+        symbol
+        exchangeid
+    }
+    Routes{
+        carrier
+        supplier
+        description
+    }
+    Accounts{
+        id
+        name
+    }
   }
-`)(TodoApp);
-//export default graphql(gql`{
-//      WatchLists {
-//            id
-//            name
-//        }
-//}`)(TodoApp);
+`;
+
+const TodoAppQ = graphql(MainQ, {
+  options: ({ watchListID, exchangeId }) => ({ variables: { watchListID, exchangeId} })
+})(TodoApp);
+
+export default TodoAppQ;
