@@ -56,7 +56,10 @@ const MainQ = gql`
 `;
 
 const TodoAppQ = graphql(MainQ, {
-  options: ({ watchListID, exchangeId }) => ({ variables: { watchListID, exchangeId} })
+  options: ({ watchListID, exchangeId }) => ({ variables: { watchListID, exchangeId},
+                                               pollInterval: 10000
+                                             })
+   
 })(TodoApp);
 
 export default TodoAppQ;
