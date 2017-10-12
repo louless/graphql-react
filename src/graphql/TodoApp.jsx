@@ -1,6 +1,7 @@
 import React from 'react';
 import { gql, graphql } from 'react-apollo';
 import Mutation from './Mutation.jsx';
+import Position from './Position.jsx';
 
 function TodoApp( { data: { loading, error, Exchanges = [], refetch } } ) {
 
@@ -20,9 +21,10 @@ function TodoApp( { data: { loading, error, Exchanges = [], refetch } } ) {
                     Refresh
                 </button>
                 <ul>
-                    {Exchanges.map((ex) => (<li key={ex.id}> {ex.description} </li>))};
+                    {Exchanges.map((ex) => (<li key={ex.id}> {ex.description} </li>))}
                 </ul>
                 <Mutation tmp={345}/>
+                <Position accountId={1} />
             </div>
             );
 }
@@ -56,10 +58,7 @@ const MainQ = gql`
 `;
 
 const TodoAppQ = graphql(MainQ, {
-  options: ({ watchListID, exchangeId }) => ({ variables: { watchListID, exchangeId},
-                                               pollInterval: 10000
-                                             })
-   
+  options: ({ watchListID, exchangeId }) => ({ variables: { watchListID, exchangeId} })   
 })(TodoApp);
 
 export default TodoAppQ;
