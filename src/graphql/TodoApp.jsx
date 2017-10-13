@@ -3,7 +3,7 @@ import { gql, graphql } from 'react-apollo';
 import Mutation from './Mutation.jsx';
 import Position from './Position.jsx';
 
-function TodoApp( { data: { loading, error, Exchanges = [], refetch } } ) {
+function TodoApp( { data: { loading, error, Exchanges = [], Orders = [], refetch } } ) {
 
 //    console.log('enter to todoApp...');
 //    console.log(typeof WatchLists);
@@ -53,6 +53,13 @@ const MainQ = gql`
     Accounts{
         id
         name
+    }
+    Orders{
+        id
+        price
+        quantity
+        side
+        type
     }
   }
 `;
