@@ -54,15 +54,17 @@ const MainQ = gql`
         id
         name
     }
-    Orders{
-        id
-        price
-        quantity
-        side
-        type
-    }
+    Orders
   }
 `;
+//
+//    Orders{
+//        id
+//        price
+//        quantity
+//        side
+//        type
+//    }
 
 const TodoAppQ = graphql(MainQ, {
   options: ({ watchListID, exchangeId }) => ({ variables: { watchListID, exchangeId} })   
