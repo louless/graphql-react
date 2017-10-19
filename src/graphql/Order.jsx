@@ -75,8 +75,8 @@ const OrderRender = (props) => {
 };
 
 const sendOrderMutation = gql`
-        mutation MutationMain{
-            AddOrder(Order: $OrderInputType)
+        mutation MutationMain($Order: OrderInputType){
+            AddOrder(Order: $Order)
         }
 `;
 
