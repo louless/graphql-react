@@ -2,6 +2,7 @@ import React from 'react';
 import { gql, graphql } from 'react-apollo';
 import Mutation from './Mutation.jsx';
 import Position from './Position.jsx';
+import Order from './Order.jsx';
 
 function TodoApp( { data: { loading, error, Exchanges = [], Orders = [], refetch } } ) {
 
@@ -25,6 +26,7 @@ function TodoApp( { data: { loading, error, Exchanges = [], Orders = [], refetch
                 </ul>
                 <Mutation tmp={345}/>
                 <Position accountId={1} />
+                <Order />
             </div>
             );
 }
