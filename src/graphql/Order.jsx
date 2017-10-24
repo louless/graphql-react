@@ -7,12 +7,7 @@ const OrderRender = (props) => {
     function sendOrder(){
 
         let instrumentToSubmit = {
-                    "attributes" : //[
-                       // "java.util.TreeMap",
-                        {
-                            "PRICEDIGITS" : 5
-                        },
-                    //],
+                    "attributes" : { "PRICEDIGITS" : 5 },
                     "baseSymbol" : "",
                     "exchangeid" : 1,
                     "id" : 57,
