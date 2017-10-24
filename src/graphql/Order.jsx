@@ -1,21 +1,12 @@
 import React from 'react';
 import { gql, graphql } from 'react-apollo';
+const Marxcore = require('../../assets/js/marx.core.js');
 
 const OrderRender = (props) => {
 
     function sendOrder(){
 
-        let newOrder = {
-                "id" : null,
-                "state" : null,
-                "type" : "MARKET",
-                "side" : "SELL",
-                "notes" : null,
-                "companyId" : 1,
-                "ownerId" : 1,
-                "creationTime" : 1508402491835,
-                "quantity" : 100000,
-                "instrument" : {
+        let instrumentToSubmit = {
                     "attributes" : //[
                        // "java.util.TreeMap",
                         {
@@ -28,7 +19,19 @@ const OrderRender = (props) => {
                     "symbol" : "AUDCAD",
                     "type" : "FOREIGNEXCHANGE",
                     "underlyingid" : 0
-                },
+                };
+
+        let newOrder = {
+                "id" : null,
+                "state" : null,
+                "type" : "MARKET",
+                "side" : "SELL",
+                "notes" : null,
+                "companyId" : 1,
+                "ownerId" : 1,
+                "creationTime" : (+new Date),
+                "quantity" : 100000,
+                "instrument" : instrumentToSubmit,
                 "relatedOrderId" : 0,
                 "accountId" : 1,
                 "destinationId" : 1,
@@ -47,7 +50,7 @@ const OrderRender = (props) => {
                 "cumqty" : 0,
                 "leavesqty" : 0,
                 "aon" : false,
-                "custOrderId" : "c5c6bf91-fe52-4b32-8bd0-7ac1e62f3abb",
+                "custOrderId" : Marxcore.createUUID(),
                 "execInst" : null,
                 "relatedClOrdId" : null,
                 "quoteId" : null
