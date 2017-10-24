@@ -15,7 +15,7 @@ const OrderRender = (props) => {
                 "ownerId" : 1,
                 "creationTime" : 1508402491835,
                 "quantity" : 100000,
-              /*  "instrument" : {
+                "instrument" : {
                     "attributes" : //[
                        // "java.util.TreeMap",
                         {
@@ -28,7 +28,7 @@ const OrderRender = (props) => {
                     "symbol" : "AUDCAD",
                     "type" : "FOREIGNEXCHANGE",
                     "underlyingid" : 0
-                },*/
+                },
                 "relatedOrderId" : 0,
                 "accountId" : 1,
                 "destinationId" : 1,
@@ -76,7 +76,12 @@ const OrderRender = (props) => {
 
 const sendOrderMutation = gql`
         mutation MutationMain($order: OrderInputType){
-            AddOrder(order: $order)
+            AddOrder(order: $order){
+                id
+                createTime
+                type
+                text
+            }
         }
 `;
 
