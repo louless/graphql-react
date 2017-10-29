@@ -15,7 +15,7 @@ function TodoApp( { data: { loading, error, Exchanges = [], Orders = [], refetch
     } else if (error) {
         return <p>{error.message}</p>;
     }
-    
+
     return (
             <div>
                 <button onClick={() => refetch()}>
@@ -56,7 +56,9 @@ const MainQ = gql`
         id
         name
     }
-    Orders
+    emsgs {
+        userId
+    }
   }
 `;
 //
@@ -69,7 +71,7 @@ const MainQ = gql`
 //    }
 
 const TodoAppQ = graphql(MainQ, {
-  options: ({ watchListID, exchangeId }) => ({ variables: { watchListID, exchangeId} })   
+  options: ({ watchListID, exchangeId }) => ({ variables: { watchListID, exchangeId} })
 })(TodoApp);
 
 export default TodoAppQ;
