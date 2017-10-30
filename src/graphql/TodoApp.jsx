@@ -4,7 +4,7 @@ import Mutation from './Mutation.jsx';
 import Position from './Position.jsx';
 import Order from './Order.jsx';
 
-function TodoApp( { data: { loading, error, Exchanges = [], Orders = [], refetch } } ) {
+function TodoApp( { data: { loading, error, Exchanges = [], Orders = [], refetch, orderFilter } } ) {
 
 //    console.log('enter to todoApp...');
 //    console.log(typeof WatchLists);
@@ -33,7 +33,7 @@ function TodoApp( { data: { loading, error, Exchanges = [], Orders = [], refetch
 
 // works with deploy Marx
 const MainQ = gql`
-  query TodoAppQuery ($watchListID: Int, $exchangeId: Int){
+  query TodoAppQuery ($watchListID: Int, $exchangeId: Int, $orderFilter: OrderFilter){
     WatchLists (watchListID: $watchListID)  {
       id
       name
@@ -76,11 +76,17 @@ const MainQ = gql`
             }
         }
     }
+    Orders (orderFilter: $orderFilter){
+        id
+        quantity
+        side
+    }
   }
 `;
 
 const TodoAppQ = graphql(MainQ, {
-  options: ({ watchListID, exchangeId }) => ({ variables: { watchListID, exchangeId} })
+  options: ({ watchListID, exchangeId, orderFilter }) => ({ variables: { watchListID, exchangeId, orderFilter} ,
+                                              pollInterval: 10000})
 })(TodoApp);
 
 export default TodoAppQ;
