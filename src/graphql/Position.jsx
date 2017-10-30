@@ -40,7 +40,7 @@ const query = gql`
 
 const PositionQ = graphql(query, {
   options: (props) => ({ variables: {accountId: props.accountId},
-                         pollInterval: 15000 })
+                         pollInterval: 60000 })
 })(Position);
 
 export default PositionQ;

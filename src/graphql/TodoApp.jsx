@@ -54,21 +54,30 @@ const MainQ = gql`
     }
     Accounts{
         id
-        name
+        name 
     }
     emsgs {
-        userId
+        ... on ETSRouteEvent {
+            eventtype
+            order {
+                id
+            }
+        }
+        ... on ETSExecutionEvent {
+            gateway
+            order {
+                id
+            }
+        }
+        ... on ETSLogEvent {
+            eventtype
+            order {
+                id
+            }
+        }
     }
   }
 `;
-//
-//    Orders{
-//        id
-//        price
-//        quantity
-//        side
-//        type
-//    }
 
 const TodoAppQ = graphql(MainQ, {
   options: ({ watchListID, exchangeId }) => ({ variables: { watchListID, exchangeId} })
