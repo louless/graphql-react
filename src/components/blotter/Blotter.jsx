@@ -103,6 +103,23 @@ const Blotter = () => {
     function getUserIds(){
         Omsservices.getUserIDs();
     }
+    function getMarxEntryApp(){
+        var jqxhr =
+            $.ajax({
+                url: 'http://testui.marx.tech:8080/marxentry/json/body/get'
+//                headers: {
+//                    'X-PINGARUNER':'pingpong'
+//                }
+//                data: {
+//                    name : "The name",
+//                    desc : "The description"
+//                }
+            })
+            .done  (function(data, textStatus, jqXHR)        { alert("Success: " + data) ; })
+            .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
+            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
+    }
+
 
   return (
     <div className="panel panel-default">
@@ -117,6 +134,7 @@ const Blotter = () => {
         <button className="btn className='btn btn-primary btn-block" onClick={watchlistTestFetchClick}>watchlist test Fetch</button>
         <button className="btn className='btn btn-primary btn-block" onClick={getUserIds}>getUserIds</button>
         <button className="btn className='btn btn-primary btn-block" onClick={getInstr}>get instr exch = 1</button>
+        <button className="btn className='btn btn-primary btn-block" onClick={getMarxEntryApp}>marxentry</button>
       </div>
     </div>
   );
