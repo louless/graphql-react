@@ -17,7 +17,10 @@ const getFirstCookie = (res) => {
     const cookie = cookies[0];
     if (!cookies)
         return null;
-    return cookie.substr(0, cookie.indexOf(';'));
+//    console.log("1:" + cookie.substr(0, cookie.indexOf(';')));
+    console.log("1:" + cookie);
+//    return cookie.substr(0, cookie.indexOf(';'));
+    return cookie;
 };
 
 const serverUrl = 'http://testui.marx.tech:8080/';
@@ -44,6 +47,7 @@ const doLogin = () => {
                       })
                 .then(getFirstCookie)
                 .then(sessionCookie => {
+                    console.log("2:" + sessionCookie);
                     request.post(loginUrl)
                             .timeout({
                                 response: 10000,  // Wait 10 seconds for the server to start sending,
@@ -55,6 +59,7 @@ const doLogin = () => {
                             .send({j_username: username, j_password: password})
                             .then(res => {
                                 const sessionCookies = sessionCookie + '; ' + getFirstCookie(res);
+                                console.log("3:" + sessionCookies);
                                 resolve(sessionCookies);
                             });
                     })
