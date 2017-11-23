@@ -106,7 +106,7 @@ const Blotter = () => {
     function getMarxEntryApp(){
         var jqxhr =
             $.ajax({
-                url: 'http://deploy.marx.tech:8080/marxentry/login'
+                url: 'http://deploy.marx.tech:8080/marxentry/login?username=administrator&password=marx',
 //                headers: {
 //                    'X-PINGARUNER':'pingpong'
 //                }
@@ -114,6 +114,9 @@ const Blotter = () => {
 //                    name : "The name",
 //                    desc : "The description"
 //                }
+                xhrFields: {
+                    withCredentials: true
+                }
             })
             .done  (function(data, textStatus, jqXHR)        { alert("Success: " + data) ; })
             .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
