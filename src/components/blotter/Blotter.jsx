@@ -115,6 +115,9 @@ const Blotter = () => {
             .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
             .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
     }
+    function doLogOut(){
+        ApiSvc.logout();
+    }
 
   return (
     <div className="panel panel-default">
@@ -129,7 +132,8 @@ const Blotter = () => {
         <button className="btn className='btn btn-primary btn-block" onClick={watchlistTestFetchClick}>watchlist test Fetch</button>
         <button className="btn className='btn btn-primary btn-block" onClick={getUserIds}>getUserIds</button>
         <button className="btn className='btn btn-primary btn-block" onClick={getInstr}>get instr exch = 1</button>
-        <button className="btn className='btn btn-primary btn-block" onClick={getMarxEntryApp}>marxentry</button>       
+        <button className="btn className='btn btn-primary btn-block" onClick={getMarxEntryApp}>marxentry</button>
+        <button className="btn className='btn btn-primary btn-block" onClick={doLogOut}>log out</button>
       </div>
     </div>
   );

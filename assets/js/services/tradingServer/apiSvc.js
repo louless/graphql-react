@@ -100,7 +100,13 @@ const login = (username, password) => {
 
 const logout = () => {
   return request.get(config.serverUrl + 'LogOut')
-          .withCredentials();
+            .withCredentials()
+            .then((res) => {
+                console.log(res.body);
+            })
+            .catch( err => {
+                console.log(err);
+            });
 };
 
 const getCurrentUserInfo = () => {
