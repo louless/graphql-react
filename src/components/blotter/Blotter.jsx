@@ -115,21 +115,21 @@ const Blotter = () => {
             .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
             .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
     }
-    function doLogOut(){
-        ApiSvc.logout();
-    }
-    function doLogOutMarketData(){
-         var jqxhr =
-            $.ajax({
-                url: 'http://deploy.marx.tech:8080/etsmarketdata/LogOut',
-                xhrFields: {
-                    withCredentials: true
-                }
-            })
-            .done  (function(data, textStatus, jqXHR)        { alert("Success: " + data) ; })
-            .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
-            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
-    }
+//    function doLogOut(){
+//        ApiSvc.logout();
+//    }
+//    function doLogOutMarketData(){
+//         var jqxhr =
+//            $.ajax({
+//                url: 'http://deploy.marx.tech:8080/etsmarketdata/LogOut',
+//                xhrFields: {
+//                    withCredentials: true
+//                }
+//            })
+//            .done  (function(data, textStatus, jqXHR)        { alert("Success: " + data) ; })
+//            .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
+//            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
+//    }
     function doLogOutJsx(){
          var jqxhr =
             $.ajax({
@@ -142,40 +142,43 @@ const Blotter = () => {
             .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
             .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
     }
-     function doLogOutAuthenticated(){
-         var jqxhr =
-            $.ajax({
-                url: 'http://deploy.marx.tech:8080/authenticated/LogOut',
-                xhrFields: {
-                    withCredentials: true
-                }
-            })
-            .done  (function(data, textStatus, jqXHR)        { alert("Success: " + data) ; })
-            .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
-            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
-    }
+//     function doLogOutAuthenticated(){
+//         var jqxhr =
+//            $.ajax({
+//                url: 'http://deploy.marx.tech:8080/authenticated/LogOut',
+//                xhrFields: {
+//                    withCredentials: true
+//                }
+//            })
+//            .done  (function(data, textStatus, jqXHR)        { alert("Success: " + data) ; })
+//            .fail  (function(jqXHR, textStatus, errorThrown) { alert("Error")   ; })
+//            .always(function(jqXHROrData, textStatus, jqXHROrErrorThrown)     { alert("complete"); });
+//    }
 
   return (
     <div className="panel panel-default">
       <div className="panel-heading">BLOTTER</div>
       <div className="panel-body">
         Panel content
-        <button className="btn className='btn btn-primary btn-block" onClick={testClick}>test CORS marx app</button>
-        <button className="btn className='btn btn-primary btn-block" onClick={test$Click}>test CORS marx app using JQuery</button>
-        <button className="btn className='btn btn-primary btn-block" onClick={loginClick}>do log in as test</button>
-        <button className="btn className='btn btn-primary btn-block" onClick={testCorsGraphqlServerClick}>test CORS graphqlserver app</button>
         <button className="btn className='btn btn-primary btn-block" onClick={watchlistIdsClick}>watchlist Ids</button>
-        <button className="btn className='btn btn-primary btn-block" onClick={watchlistTestFetchClick}>watchlist test Fetch</button>
-        <button className="btn className='btn btn-primary btn-block" onClick={getUserIds}>getUserIds</button>
-        <button className="btn className='btn btn-primary btn-block" onClick={getInstr}>get instr exch = 1</button>
-        <button className="btn className='btn btn-primary btn-block" onClick={getMarxEntryApp}>marxentry</button>
-        <button className="btn className='btn btn-primary btn-block" onClick={doLogOut}>log out root</button>
-        <button className="btn className='btn btn-primary btn-block" onClick={doLogOutMarketData}>log out marketdata</button>
-        <button className="btn className='btn btn-primary btn-block" onClick={doLogOutJsx}>log out jsx</button>
-        <button className="btn className='btn btn-primary btn-block" onClick={doLogOutAuthenticated}>log out authenticated</button>
+        <button className="btn className='btn btn-primary btn-block" onClick={getMarxEntryApp}>log in</button>
+        <button className="btn className='btn btn-primary btn-block" onClick={doLogOutJsx}>log out</button>
       </div>
     </div>
   );
 };
 
 export default Blotter;
+/*
+  <!--<button className="btn className='btn btn-primary btn-block" onClick={testClick}>test CORS marx app</button>-->
+        <!--<button className="btn className='btn btn-primary btn-block" onClick={test$Click}>test CORS marx app using JQuery</button>-->
+        <!--<button className="btn className='btn btn-primary btn-block" onClick={loginClick}>do log in as test</button>-->
+        <!--<button className="btn className='btn btn-primary btn-block" onClick={testCorsGraphqlServerClick}>test CORS graphqlserver app</button>-->
+        <!--<button className="btn className='btn btn-primary btn-block" onClick={watchlistTestFetchClick}>watchlist test Fetch</button>-->
+        <!--<button className="btn className='btn btn-primary btn-block" onClick={getUserIds}>getUserIds</button>-->
+        <!--<button className="btn className='btn btn-primary btn-block" onClick={getInstr}>get instr exch = 1</button>-->
+        <!--<button className="btn className='btn btn-primary btn-block" onClick={doLogOut}>log out root</button>-->
+        <!--<button className="btn className='btn btn-primary btn-block" onClick={doLogOutMarketData}>log out marketdata</button>-->
+        <!--<button className="btn className='btn btn-primary btn-block" onClick={doLogOutAuthenticated}>log out authenticated</button>-->
+
+        */
